@@ -1,0 +1,152 @@
+/*
+* ===================================================
+*     Typography
+* ===================================================
+*/
+
+.subtitle {
+    margin-bottom: 0;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: $gray-600;
+    font-weight: bold;
+}
+
+.label-heading {
+    color: $gray-600;
+    font-size: $font-size-base * .8;
+    @include uppercase;
+    font-weight: normal;
+}
+
+.hero-heading {
+    margin-bottom: 2rem;
+}
+
+@include media-breakpoint-down(md) {
+    h1.hero-heading {
+        font-size: $h1-font-size * .5;
+    }
+
+    h2.hero-heading {
+        font-size: $h2-font-size * .5;
+    }
+
+    h3.hero-heading {
+        font-size: $h3-font-size * .5;
+    }
+}
+
+@include media-breakpoint-down(sm) {
+    .display-1 {
+        font-size: $display1-size-small;
+    }
+
+    .display-2 {
+        font-size: $display2-size-small;
+    }
+
+    .display-3 {
+        font-size: $display3-size-small;
+    }
+
+    .display-4 {
+        font-size: $display4-size-small;
+    }
+}
+
+.text-content {
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    ul,
+    ol,
+    blockquote {
+        margin-bottom: 2rem;
+    }
+}
+
+.text-content {
+
+    p,
+    ul,
+    ol {
+        font-size: 1.1rem;
+    }
+
+    p,
+    ul,
+    ol {
+        color: $gray-600;
+    }
+}
+
+p.lead {
+    strong {
+        font-weight: bold;
+    }
+}
+
+.btn {
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.input-group .btn {
+    padding-top: $input-btn-padding-y;
+    padding-bottom: $input-btn-padding-y;
+}
+
+.btn-sm {
+    @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $font-size-sm - .1rem, $btn-line-height-sm, $btn-border-radius-sm);
+}
+
+.dropdown-menu {
+    box-shadow: $dropdown-box-shadow;
+}
+
+.dropdown-header {
+    padding: .7rem $dropdown-item-padding-x;
+    letter-spacing: 0.2rem;
+    @include uppercase;
+}
+
+.blockquote {
+    padding: $spacer;
+    border-left: 2px solid theme-color();
+}
+
+.hr-text {
+    line-height: 1em;
+    position: relative;
+    outline: 0;
+    border: 0;
+    color: $hr-border-color;;
+    text-align: center;
+    height: 1.5rem;
+    &:before {
+      content: '';
+      background: $hr-border-color;
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 100%;
+      height: 1px;
+    }
+    &:after {
+      content: attr(data-content);
+      position: relative;
+      display: inline-block;
+      font-size: .8rem;
+      padding: 0 .5em;
+      line-height: 1.5rem;
+      color: $gray-500;
+      background-color: #fff;
+    }
+  }

@@ -1,0 +1,122 @@
+/*
+* ===================================================
+*     Homepage Elements
+* ===================================================
+*/
+
+// Homepage full-screen slider
+
+.hero-home {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    @include media-breakpoint-up(md) {
+        min-height: 600px;
+    }
+}
+
+/*
+     Search bars on the homepage
+    ------------------------
+*/
+
+.search-bar {
+    border-radius: 10rem;
+    background: #fff;
+    box-shadow: $box-shadow;
+
+    .form-group {
+        position: relative;
+        margin-bottom: 0;
+
+        &::after {
+            display: block;
+            width: 1px;
+            height: 60%;
+            content: '';
+            background: #ddd;
+            @include position(absolute, 20%, $right: 0);
+        }
+
+        &.no-divider,
+        &:last-of-type {
+            &::after {
+                display: none;
+            }
+        }
+    }
+
+    .form-control {
+        height: $input-height-lg;
+    }
+
+    .input-label-absolute-right .label-absolute {
+        right: 0;
+    }
+
+}
+
+@include media-breakpoint-down(md) {
+    .search-bar {
+        border-radius: 20px;
+
+        .form-group {
+            margin-bottom: 1rem;
+
+            &::after {
+                display: block;
+                width: calc(100% - 4rem);
+                height: 1px;
+                content: '';
+                background: $gray-300;
+                @include position(absolute, $top: auto, $bottom: 0, $left: 50%, $right: auto);
+                transform: translateX(-50%);
+            }
+        }
+
+        .form-control {
+            padding: 10px 20px;
+            height: $input-height;
+        }
+
+        .input-label-absolute-right .label-absolute {
+            right: 1rem;
+        }
+
+        .bootstrap-select {
+            display: block !important;
+            width: 100% !important;
+            padding: 0;
+
+            button {
+                display: block;
+                width: 100% !important;
+                padding: 10px 20px;
+            }
+        }
+
+    }
+}
+
+.hero {
+    position: relative;
+    text-align: center;
+    background: $gray-100;
+    box-shadow: $box-shadow-sm;
+}
+
+.hero-slider {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+
+    .swiper-slide {
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+    }
+}

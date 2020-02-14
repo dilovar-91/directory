@@ -1,0 +1,34 @@
+/*
+=========================================
+=========================================
+
+Directory  - Bootstrap 4 Directory & Listing Theme
+
+
+Copyright 2019 - Bootstrapious.com
+
+=========================================
+========================================= */
+
+
+// functions.scss - Bootstrap functions
+@import "bootstrap/functions"; 
+
+// your variables + overrides of Bootstrap variables 
+@import "user/user-variables"; 
+
+// custom variables + overrides of Bootstrap variables for this theme
+@import "custom/variables"; 
+
+// bootstrap main
+@import "bootstrap/bootstrap";
+
+// 3rd party plugin variables
+@import "custom/variables-3rd-party.scss";
+
+// theme components
+@import "custom/theme";
+
+// your components
+@import "user/user"; 
+

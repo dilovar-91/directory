@@ -20,6 +20,7 @@ const routes = [
   { path: '/main', name: 'main', component: page('main.vue') },
   { path: '/companies/:page', name: 'companies', component: page('companies.vue'), props: route => ({ page: (route.query.page || 1) }) },
   { path: '/company/:id', name: 'company-detail', component: page('company/detail.vue') },
+  { path: '/city/:id', name: 'city-detail', component: page('cities/detail.vue') },
   { path: '/articles', name: 'articles', component: page('main.vue') },
   { path: '/contact', name: 'contact', component: page('contact.vue') },
   { path: '/cities', name: 'cities', component: page('main.vue') },

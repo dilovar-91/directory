@@ -74,5 +74,8 @@
   "phone": "Телефон",  
   "website": "Сайт",    
   "job-schedule": "График работы", 
+  "review": "Отзыв", 
+  "write-review": "Написать отзыв", 
+  "go-to-site": "Перейти на сайт",
   "last": "Last"
 }

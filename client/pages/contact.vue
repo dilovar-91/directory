@@ -6,15 +6,11 @@
     
     <RecentReviews></RecentReviews> 
 
-    <section class="py-5">
-<div class="container">
-<Swiper></Swiper>
-</div>
-</section>
+
 </div>
 </template>
 <script>
-import Swiper from '~/components/Swiper'
+
 import Popular from '~/components/Popular'
 import RecentReviews from '~/components/RecentReviews'
 import Hero from '~/components/Hero'
@@ -23,7 +19,7 @@ import { mapGetters } from 'vuex'
 export default {
   layout: 'main',
   components: {
-      Swiper,
+    
       Popular,
       RecentReviews,
       Hero

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import swal from 'sweetalert2'
 export const state = () => ({
   reviews: [],
   allreviews: [],
@@ -35,12 +36,31 @@ export const mutations = {
     // eslint-disable-next-line no-undef
     merge(state.reviews, value)
   },
-  UPDATE_LIKE(state, review) {
-    const reviewIndex = state.review.findIndex((t) => t.id == review.id)
-    Object.assign(state.review[reviewIndex], { recomend_count:review.recomend_count + 1 })    
+  UPDATE_LIKE(state, payload) {
+    const resultIndex = state.reviews.findIndex((p) => p.id == payload.id)
+      Object.assign(state.reviews[resultIndex], payload)  
   }
 }
 export const actions = {
+  addReview({ commit }, { review}) {
+    return new Promise((resolve, reject) => {
+      axios.post("/review/setreview", {review})
+        .then((response) => {
+          
+          if (response.status === 201) {
+            swal({
+              type: 'success',
+              title: 'Отзыв',
+              text: 'Отзыв успешно сохранен!',
+              reverseButtons: true,
+              confirmButtonText: 'OK',
+              cancelButtonText:'Отмена'
+            })
+          }
+        })
+        .catch((error) => { reject(error) })
+    })
+  },
   async get ({ commit }, { slug }) {
     await this.$axios.get(`/reviews/${slug}`)
       .then((res) => {
@@ -68,10 +88,12 @@ export const actions = {
 
   setLike({ commit }, review) {
     return new Promise((resolve, reject) => {
-      this.$axios.post(`/review/like/${review.id}`)
+      this.$axios.post(`/review/like`, review)
         .then((response) => {
-          commit('UPDATE_LIKE')
+          if (response.status === 200) {
+          commit('UPDATE_LIKE', response.data)
           resolve(response)
+          }
         })
         .catch((error) => { reject(error) })
     })

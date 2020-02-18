@@ -14,7 +14,7 @@
           </div>
         </div>
         <div class="row">
-        <Swiper></Swiper>
+        <CityList></CityList>
         </div>
       </div>
     </section>
@@ -73,7 +73,7 @@
 </div>
 </template>
 <script>
-import Swiper from '~/components/Swiper'
+import CityList from '~/components/CityList'
 import Popular from '~/components/Popular'
 import RecentReviews from '~/components/RecentReviews'
 import Hero from '~/components/Hero'
@@ -82,7 +82,7 @@ import { mapGetters } from 'vuex'
 export default {
   layout: 'main',
   components: {
-      Swiper,
+      CityList,
       Popular,
       RecentReviews,
       Hero

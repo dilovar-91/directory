@@ -22,6 +22,8 @@ Route::get('/article/{id}', 'Api\ArticleController@getArticle');
 Route::get('/allreviews/{page}', 'Api\ReviewController@getAllReviews');
 Route::get('/img/{image}', 'Api\CompanyController@getImage');
 Route::post('/rating/new', 'Api\ReviewController@setrating');
+Route::post('/review/like', 'Api\ReviewController@setLike');
+Route::post('/review/setreview', 'Api\ReviewController@setrating');
 
 Route::get('/cities', 'Api\CompanyController@cities')->name('api.cities');
 Route::get('/metros', 'Api\CompanyController@metro')->name('api.metro');

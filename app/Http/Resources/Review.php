@@ -13,6 +13,7 @@ class Review extends JsonResource
     {
         return [
             
+            'id' => $this->id,
             'author' => $this->author,
             'title' => $this->title,
             'company' => $this->company,

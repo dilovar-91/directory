@@ -5,13 +5,16 @@
       <div v-swiper:mySwiper="swiperOption" class="swiper-container detail-slider slider-gallery">
         <!-- Additional required wrapper-->
         <div class="swiper-wrapper">
+
           <!-- Slides-->
-          <div class="swiper-slide"><a href="/img/photo/photo-1426122402199-be02db90eb90.jpg" data-toggle="gallery-top" title="Our street"><img src="/img/photo/photo-1426122402199-be02db90eb90.jpg" alt="Our street" class="img-fluid"></a></div>
-          <div class="swiper-slide"><a href="/img/photo/photo-1512917774080-9991f1c4c750.jpg" data-toggle="gallery-top" title="Outside"><img src="/img/photo/photo-1512917774080-9991f1c4c750.jpg" alt="Outside" class="img-fluid"></a></div>
-          <div class="swiper-slide"><a href="/img/photo/photo-1494526585095-c41746248156.jpg" data-toggle="gallery-top" title="Rear entrance"><img src="/img/photo/photo-1494526585095-c41746248156.jpg" alt="Rear entrance" class="img-fluid"></a></div>
-          <div class="swiper-slide"><a href="/img/photo/photo-1484154218962-a197022b5858.jpg" data-toggle="gallery-top" title="Kitchen"><img src="/img/photo/photo-1484154218962-a197022b5858.jpg" alt="Kitchen" class="img-fluid"></a></div>
-          <div class="swiper-slide"><a href="/img/photo/photo-1522771739844-6a9f6d5f14af.jpg" data-toggle="gallery-top" title="Bedroom"><img src="/img/photo/photo-1522771739844-6a9f6d5f14af.jpg" alt="Bedroom" class="img-fluid"></a></div>
-          <div class="swiper-slide"><a href="/img/photo/photo-1488805990569-3c9e1d76d51c.jpg" data-toggle="gallery-top" title="Bedroom"><img src="/img/photo/photo-1488805990569-3c9e1d76d51c.jpg" alt="Bedroom" class="img-fluid"></a></div>
+          <div class="swiper-slide" v-for="pic in company.pictures" :key="pic">
+            <a :href="'/img/companies/'+pic" data-toggle="gallery-top">
+            <img :src="'/img/companies/'+pic" alt="company.title" class="img-fluid border pic" >
+            </a>
+          </div>
+
+
+          
         </div>
         <div class="swiper-pagination swiper-pagination-white"></div>
         <div class="swiper-button-prev swiper-button-white"></div>
@@ -90,11 +93,14 @@
           <div class="text-block">            
             <h5 class="mb-4 subtitle text-sm text-primary">{{$t('reviews')}}</h5>
             <div class="media d-block d-sm-flex review" v-for="review in reviews" :key="review.id">
-              <div class="text-md-center mr-4 mr-xl-5"><img src="/img/avatar/avatar-8.jpg" alt="Padmé Amidala" class="d-block avatar avatar-xl p-2 mb-2"><span class="text-uppercase text-muted text-sm">{{ review.author }}</span></div>
+              <div class="text-md-center mr-4 mr-xl-5"><img src="/img/user-pic.png" alt="Padmé Amidala" class="d-block avatar avatar-xl p-2 mb-2"><span class="text-uppercase text-muted text-sm">{{ review.author }}</span></div>
               <div class="media-body">
-                <h4 class="mb-0 text">Заголовок: {{review.title || ''}} <span class="float-right" ><i class="fa fa-heart fa mr-1" style="color:red;" @submit.prevent="setLike(review.id)" ></i>{{review.recomend_count }}</span></h4>
-                <HeartButton></HeartButton>           
-                <p class="font-weight-bold mb-0">Дата: {{ $moment(review.created_at).utc().format('DD/MM/YYYY HH:mm')  }}</p>
+                <h4 class="mb-0 text">Заголовок: {{review.title || ''}} <span class="float-right" ><i class="fa fa-heart pulse" style="color:red;"  @click.prevent="setLike($event, review.id)" ></i> {{review.recomend_count }}</span></h4>
+                
+                <!-- <HeartButton></HeartButton>            -->
+
+                
+                <p class="font-weight-bold mb-0">Дата: {{ $moment(review.created_at).utc().format('DD/MM/YYYY HH:mm')  }} </p>
                 <p class="text-success font-weight-bold mb-0">Преимущество: {{review.pros || ''}}</p>
                 <p class="text-danger font-weight-bold">Недостатки: {{review.cons || ''}}</p>               
                 <div class="mb-2"><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i>
@@ -102,76 +108,48 @@
                 <p class="text-muted text-sm" v-text="review.text"></p>
               </div>
             </div>
-            <div class="py-5">
-              <button type="button" data-toggle="collapse" data-target="#leaveReview" aria-expanded="false" aria-controls="leaveReview" class="btn btn-outline-primary">Leave a review</button>
-              <div id="leaveReview" class="collapse mt-4">
-                <h5 class="mb-4">Leave a review</h5>
-                <form id="contact-form" method="get" action="#" class="form">
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <label for="name" class="form-label">Your name *</label>
-                        <input type="text" name="name" id="name" placeholder="Enter your name" required="required" class="form-control">
-                      </div>
-                    </div>
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <label for="rating" class="form-label">Your rating *</label>
-                        <select name="rating" id="rating" class="custom-select focus-shadow-0">
-                          <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733; (5/5)</option>
-                          <option value="4">&#9733;&#9733;&#9733;&#9733;&#9734; (4/5)</option>
-                          <option value="3">&#9733;&#9733;&#9733;&#9734;&#9734; (3/5)</option>
-                          <option value="2">&#9733;&#9733;&#9734;&#9734;&#9734; (2/5)</option>
-                          <option value="1">&#9733;&#9734;&#9734;&#9734;&#9734; (1/5)</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="email" class="form-label">Your email *</label>
-                    <input type="email" name="email" id="email" placeholder="Enter your  email" required="required" class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="review" class="form-label">Review text *</label>
-                    <textarea rows="4" name="review" id="review" placeholder="Enter your review" required="required" class="form-control"></textarea>
-                  </div>
-                  <button type="submit" class="btn btn-primary">Post review</button>
-                </form>
-              </div>
-            </div>
+            <AddReview :company_id="company.id"></AddReview>
           </div>
         </div>
         <div class="col-lg-4">
-          <div style="top: 100px;" class="p-4 shadow ml-lg-4 rounded sticky-top">
-            <p class="text-muted"><span class="text-primary h2">$120</span> per night</p>
-            <hr class="my-4">
-            <form id="booking-form" method="get" action="#" autocomplete="off" class="form">
-              <div class="form-group">
-                <label for="bookingDate" class="form-label">Your stay *</label>
-                <div class="datepicker-container datepicker-container-right">
-                  <input type="text" name="bookingDate" id="bookingDate" placeholder="Choose your dates" required="required" class="form-control">
+          <div style="top: 100px;" class=" shadow ml-lg-4 rounded sticky-top">           
+
+
+            
+                <div class="card-header bg-gray-100 py-2 border-0">
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <h4 class="subtitle text-primary text-center">{{$t('contact')}}</h4>
+                      
+                    </div>
+                    <svg class="svg-icon svg-icon svg-icon-light w-3rem h-3rem ml-3 text-muted">
+                      <use xlink:href="#wall-clock-1"> </use>
+                    </svg>
+                  </div>
                 </div>
-              </div>
-              <div class="form-group mb-4">
-                <label for="guests" class="form-label">Guests *</label>
-                <select name="guests" id="guests" class="form-control">
-                  <option value="1">1 Guest</option>
-                  <option value="2">2 Guests</option>
-                  <option value="3">3 Guests</option>
-                  <option value="4">4 Guests</option>
-                  <option value="5">5 Guests</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block">Book your stay</button>
-              </div>
-            </form>
-            <p class="text-muted text-sm text-center">Some additional text can be also placed here.</p>
-            <hr class="my-4">
-            <div class="text-center">
-              <p> <a href="#" class="text-secondary text-sm"> <i class="fa fa-heart"></i> Bookmark This Listing</a></p>
-              <p class="text-muted text-sm">79 people bookmarked this place </p>
-            </div>
+                <div class="card-body">
+                  <table class="table text-sm mb-0">
+                    <tbody><tr>
+                      <th class="pl-0 border-0">{{$t('phone')}}</th>
+                      <td class="pr-0 text-right border-0">{{company.tell}}</td>
+                    </tr>
+                    <tr>
+                      <th class="pl-0">{{$t('website')}}</th>
+                      <td class="pr-0 text-right">{{company.website}}</td>
+                    </tr>
+                    <tr>
+                      <th class="pl-0">{{$t('email')}}</th>
+                      <td class="pr-0 text-right">{{company.email}}</td>
+                    </tr>
+                    <tr>
+                      <th class="pl-0">{{$t('job-schedule')}}</th>
+                      <td class="pr-0 text-right">{{company.job_schedule}}</td>
+                    </tr>
+                    
+                  </tbody></table>
+                   <div class="text-center"><a :href="company.website" class="btn btn-outline-primary btn-block" target="_blank"> <i class="far fa-paper-plane mr-2"></i>{{$t('go-to-site')}}</a></div>
+                
+              </div>            
           </div>
         </div>
       </div>
@@ -180,12 +158,12 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-//import AddReview from '~/components/AddReview'
+import AddReview from '~/components/AddReview'
 import HeartButton from '~/components/HeartButton'
 export default {
 layout: "main", 
   components: {
-    //AddReview,
+   AddReview,
    HeartButton,
   }, 
 
@@ -238,11 +216,13 @@ layout: "main",
   },
   methods: {
       makeArray(keywords){            
-            console.log(keywords)
+            
             return keywords.split(",");
       },
-      setLike(id){            
-        store.dispatch("review/setLike", {id})  
+      setLike(e, id){   
+         //console.log(id)       
+        this.$store.dispatch("review/setLike", {id: id})
+        e.preventDefault()  
       },
       
       goToCompany: function (id = 'empty') {   
@@ -271,4 +251,71 @@ layout: "main",
 .nuxt {
   color: #00c48d;
 }
+
+@media screen and (min-width: 320px) {
+  .pic {
+  height: 165px;
+  }
+}
+
+@media screen and (min-width: 540px) {
+  .pic {
+  height: 190px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .pic {
+  height: 210px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .pic {
+    height: 290px;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .pic {
+    width: 100%;
+    height: 370px;
+  }
+}
+.pulse {
+  border-radius: 100%;  
+  cursor: pointer;
+  box-shadow: 0 0 0 rgba(204,169,44, 0.4);
+  animation: pulse 2s infinite;
+}
+.pulse:hover {
+  animation: none;
+}
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
+  }
+  70% {
+      -webkit-box-shadow: 0 0 0 20px rgba(204,169,44, 0);
+  }
+  100% {
+      -webkit-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+  }
+}
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
+    box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
+  }
+  70% {
+      -moz-box-shadow: 0 0 0 20px rgba(204,169,44, 0);
+      box-shadow: 0 0 0 20px rgba(204,169,44, 0);
+  }
+  100% {
+      -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+      box-shadow: 0 0 0 0 rgba(204,169,44, 0);
+  }
+}
+
+
+
 </style>

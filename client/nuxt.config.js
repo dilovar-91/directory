@@ -8,7 +8,7 @@ module.exports = {
   srcDir: __dirname,
 
   env: {
-    apiUrl: process.env.API_URL || process.env.APP_URL + '/api',
+    apiUrl: process.env.API_URL || process.env.APP_URL,
     appName: process.env.APP_NAME || 'DIrectory app',
     appLocale: process.env.APP_LOCALE || 'ru',
     githubAuth: !!process.env.GITHUB_CLIENT_ID
@@ -28,12 +28,12 @@ module.exports = {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/img/favicon.png' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Poppins:300,400,400i,700' },      
-      
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Poppins:300,400,400i,700' }, 
       { rel: 'stylesheet', href: 'https://use.fontawesome.com/releases/v5.8.1/css/all.css', integrity:'sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf', crossorigin:'anonymous'},
     ],
     script: [      
-        { src: 'https://cdn.jsdelivr.net/mojs/latest/mo.min.js', body: true },
+        //{ src: 'https://raw.githubusercontent.com/l-lin/font-awesome-animation/master/dist/font-awesome-animation.min.css', body: true },
+       
     ]    
   },
 
@@ -64,7 +64,8 @@ module.exports = {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/router', 
-    '@nuxtjs/moment', 
+    '@nuxtjs/moment',
+     
     ['vue-yandex-maps/nuxt', {
       apiKey: 'a902bc85-efc1-4908-9b11-5f84a3316883',
       lang: 'ru_RU',

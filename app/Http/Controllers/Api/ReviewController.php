@@ -40,16 +40,27 @@ class ReviewController extends Controller
         
     }
     //return ReviewResource::collection(Review::with('company.title')->where('published', '1')->orderBy('created_at', 'desc')->paginate(10));
-    public function setrating(Request $request){
-        $Review  = new Review; 
-        $Review->company_id = $request->post('company_id');
-        $Review->title = $request->post('title');
-        $Review->author = $request->post('author');
-        $Review->rating = $request->post('rating');
-        $Review->text = $request->post('text');
-        $Review->pros = $request->post('pros');
-        $Review->cons = $request->post('cons');              
+    public function setrating(Request $request){        
+       
+        $Review  = new Review;
+        $data =  $request->post('review');        
+        $Review->company_id = $data['company_id'];
+        $Review->title = $data['title'];
+        $Review->author = $data['author'];
+        $Review->email = $data['email'];
+        $Review->rating = $data['rating'];
+        $Review->text = $data['text'];
+        $Review->pros = $data['pros'];
+        $Review->cons = $data['cons'];           
         $Review->save();
         return response()->json($Review, 201);
+    }
+
+    public function setLike(Request $request){
+        $Review  = new Review;        
+        $Review = Review::find($request->post('id'));
+        $Review->increment('recomend_count');                    
+        $Review->save();
+        return response()->json($Review, 200);
     }
 }

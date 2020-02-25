@@ -1,20 +1,21 @@
-// // Body
-$body-bg: #f7f9fb;
+@charset "UTF-8";
+/*
+=========================================
+=========================================
 
-// Cards
-$card-spacer-x: 0.9375rem;
-$card-spacer-y: 0.625rem;
-$card-cap-bg: #fbfbfb;
-$card-border-color: #e8eced;
+Directory  - Bootstrap 4 Directory & Listing Theme
 
-// Borders
-$border-radius: .125rem;
-$border-radius-lg: .2rem;
-$border-radius-sm: .15rem;
 
-// Nav Pills
-$nav-pills-border-radius: 0;
+Copyright 2019 - Bootstrapious.com
 
+=========================================
+========================================= */
+/*!
+ * Bootstrap v4.3.1 (https://getbootstrap.com/)
+ * Copyright 2011-2019 The Bootstrap Authors
+ * Copyright 2011-2019 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -3233,7 +3234,7 @@ input[type="button"].btn-block {
 
 .dropdown-divider {
   height: 0;
-  margin: 0.5rem 0;
+  margin: 0.3rem 0;
   overflow: hidden;
   border-top: 1px solid #e9ecef;
 }
@@ -4074,7 +4075,7 @@ input[type="button"].btn-block {
 
 .nav-link {
   display: block;
-  padding: 0.5rem 1rem;
+  padding: 1rem 1rem;
 }
 
 .nav-link:hover, .nav-link:focus {
@@ -10777,7 +10778,7 @@ a.text-dark:hover, a.text-dark:focus {
   transition: -webkit-transform .2s;
   transition: transform .2s;
   transition: transform .2s, -webkit-transform .2s;
-  margin-top: 1rem;
+  //margin-top: 1rem;
   -webkit-transform: translateY(30px);
   transform: translateY(30px);
   color: #333;
@@ -10875,7 +10876,7 @@ a.text-dark:hover, a.text-dark:focus {
   display: flex;
   -ms-flex-align: center;
   align-items: center;
-  margin-top: 1rem;
+  //margin-top: 1rem;
   margin-bottom: 1rem;
 }
 
@@ -13315,7 +13316,7 @@ select.selectpicker {
 }
 
 .bootstrap-select.form-control-lg .dropdown-toggle {
-  padding: 0.5rem 1rem;
+  padding: 1rem 1rem;
 }
 
 .form-inline .bootstrap-select .form-control {
@@ -13683,7 +13684,7 @@ button.mfp-close {
   display: flex;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  margin-top: 1rem;
+  //margin-top: 1rem;
   color: #868e96;
   font-size: 0.875rem;
 }
@@ -14348,4 +14349,3 @@ img.bg-image {
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
-

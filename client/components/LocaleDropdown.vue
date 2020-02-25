@@ -14,6 +14,15 @@
     </div>
   </li>
 </template>
+<style scoped>
+.dropdown-menu {
+  padding-top: 0px;
+}
+
+.dropdown > li{
+    padding:0px
+}
+</style>
 
 <script>
 import { mapGetters } from 'vuex'

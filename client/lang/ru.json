@@ -77,5 +77,10 @@
   "review": "Отзыв", 
   "write-review": "Написать отзыв", 
   "go-to-site": "Перейти на сайт",
+  "write-first-review": "Будь первым напиши свой отзыв",
+  "category": "Категории",  
+  "popular-categories": "САМЫЕ ПОПУЛЯРНЫЕ КАТЕГОРИИ",  
+  "whats-trending": "Что в тренде",
+  "all-categories": "Все категории",
   "last": "Last"
 }

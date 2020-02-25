@@ -8,7 +8,7 @@ module.exports = {
   srcDir: __dirname,
 
   env: {
-    apiUrl: process.env.API_URL || process.env.APP_URL,
+    apiUrl: process.env.API_URL || process.env.APP_URL+'/api',
     appName: process.env.APP_NAME || 'DIrectory app',
     appLocale: process.env.APP_LOCALE || 'ru',
     githubAuth: !!process.env.GITHUB_CLIENT_ID
@@ -30,10 +30,13 @@ module.exports = {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Poppins:300,400,400i,700' }, 
       { rel: 'stylesheet', href: 'https://use.fontawesome.com/releases/v5.8.1/css/all.css', integrity:'sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf', crossorigin:'anonymous'},
-    ],
+      { rel: 'stylesheet', href: '/css/magnific-popup.css'},
+    ]
+    ,
     script: [      
-        //{ src: 'https://raw.githubusercontent.com/l-lin/font-awesome-animation/master/dist/font-awesome-animation.min.css', body: true },
-       
+        { src: '/js/jquery.min.js', body: true },       
+        { src: '/js/jquery.magnific-popup.min.js', body: true },       
+        { src: '/js/theme.js', body: true },       
     ]    
   },
 
@@ -50,22 +53,22 @@ module.exports = {
   ], 
 
   plugins: [
-    '~components/global',
-    '~plugins/i18n',
+    '~components/global',    
+    '~/plugins/i18n',
     '~plugins/vform',
     '~plugins/axios',
     '~plugins/fontawesome',
+    { src: '~/plugins/cool-lightbox', ssr: false },
     //'~plugins/nuxt-client-init', // Comment this for SSR
     { src: '~plugins/bootstrap', mode: 'client' },
     { src: '~plugins/swiper.js', mode: 'client' },
     { src: '~plugins/vue-select.js', mode: 'client' },
+    { src: '~plugins/vue-star-rating', mode: 'client' },
   ],
-
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/router', 
-    '@nuxtjs/moment',
-     
+    '@nuxtjs/moment',     
     ['vue-yandex-maps/nuxt', {
       apiKey: 'a902bc85-efc1-4908-9b11-5f84a3316883',
       lang: 'ru_RU',

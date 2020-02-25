@@ -19,6 +19,7 @@
       </div>
     </section>
 
+    <Category></Category>
     <Popular></Popular>
     <RecentReviews></RecentReviews>
     <section class="py-4 bg-gray-100"> 
@@ -74,6 +75,7 @@
 </template>
 <script>
 import CityList from '~/components/CityList'
+import Category from '~/components/Category'
 import Popular from '~/components/Popular'
 import RecentReviews from '~/components/RecentReviews'
 import Hero from '~/components/Hero'
@@ -84,6 +86,7 @@ export default {
   components: {
       CityList,
       Popular,
+      Category,
       RecentReviews,
       Hero
   },

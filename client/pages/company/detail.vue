@@ -12,18 +12,15 @@
             <img :src="'/img/companies/'+pic" alt="company.title" class="img-fluid border pic" >
             </a>
           </div>
-
-
-          
         </div>
         <div class="swiper-pagination swiper-pagination-white"></div>
         <div class="swiper-button-prev swiper-button-white"></div>
         <div class="swiper-button-next swiper-button-white"></div>
       </div>
     </section>
-    <div class="container py-5">
+    <div class="container py-4">
       <div class="row">
-        <div class="col-lg-8"> 
+        <div class="col-lg-7"> 
           <div class="text-block">
             <p class="text-primary"><i class="fa-map-marker-alt fa mr-1"></i> {{company.city['name']}}, {{company.metro['name']+',' || '' }}  {{company.adress || '' }}</p>
             <h1>{{company.title}}</h1>
@@ -32,7 +29,7 @@
             
             <h6 class="mb-3 ">{{$t('description')}}</h6>
             <p class="text-muted font-weight-light text-justify ">{{company.description}}</p>
-           
+          
           </div>
           <div class="text-block">
             <h4 class="mb-4">{{$t('contact')}}</h4>
@@ -91,7 +88,8 @@
             </div>
           </div>          
           <div class="text-block">            
-            <h5 class="mb-4 subtitle text-sm text-primary">{{$t('reviews')}}</h5>
+            <h5 class="mb-4 subtitle text-sm text-primary"  v-if="reviews.length>0">{{$t('reviews')}}</h5>
+            <h5 class="mb-4 subtitle text-sm text-primary"  v-else>{{$t('write-first-review')}}</h5>
             <div class="media d-block d-sm-flex review" v-for="review in reviews" :key="review.id">
               <div class="text-md-center mr-4 mr-xl-5"><img src="/img/user-pic.png" alt="Padmé Amidala" class="d-block avatar avatar-xl p-2 mb-2"><span class="text-uppercase text-muted text-sm">{{ review.author }}</span></div>
               <div class="media-body">
@@ -111,7 +109,7 @@
             <AddReview :company_id="company.id"></AddReview>
           </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-5">
           <div style="top: 100px;" class=" shadow ml-lg-4 rounded sticky-top">           
 
 
@@ -176,7 +174,8 @@ layout: "main",
   },
 
   data: () => ({
-    title: process.env.appName,  
+    title: process.env.appName, 
+    index: null, 
     swiperOption: {
         slidesPerView: 3,
         spaceBetween: 0,
@@ -210,8 +209,10 @@ layout: "main",
       return Number(this.$route.params.id)
     },
   }, 
-  async fetch({store, params: { id, page }}) {     
-    await store.dispatch("company/fetch_item", {id})
+  async fetch({store, error, params: { id, page }}) {     
+    await store.dispatch("company/fetch_item", {id}).catch((e)=>
+      error({statusCode: 404, message: 'This page could not be found'})      
+      ) 
     await store.dispatch("review/fetch_item", {id})  
   },
   methods: {

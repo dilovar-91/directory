@@ -57,6 +57,25 @@ class CompanyController extends Controller
         //dd($results);                
     }
 
+
+    public function getCompaniesByCity($id)
+    {
+       $results = Company::where('active', '=', '1')->where('city_id', $id)
+	->with('city', 'metro', 'category')
+	->leftJoin('reviews', 'reviews.company_id', '=', 'companies.id')
+	->select(array('companies.*',
+        DB::raw('CAST(AVG(rating) as UNSIGNED ) as ratings_average'),
+        DB::raw('COUNT(reviews.id) AS review_count')
+        ))
+    //->select('COUNT(companies.id) as count')
+	->groupBy('companies.id')
+    ->orderBy('ratings_average', 'DESC')
+    
+	->paginate(20);
+        return response()->json($results, 200);
+        //dd($results);                
+    }
+
     
 
     public function getCompany($id)
@@ -89,8 +108,7 @@ class CompanyController extends Controller
         //return $results->toJson();               
     }
 
-    public function getImage ($image){
-        
+    public function getImage ($image){        
         $url = "/nuxt/static/img/company/".$image;
         $image = base_path($url);        
         if(file_exists($image)) {
@@ -107,7 +125,13 @@ class CompanyController extends Controller
     public function cities(Request $request)
     {
         $q = $request->get('q');
-        return City::where('name', 'like', "%$q%")->orderBy('order', 'asc')->paginate(20, ['id', 'name', 'pic']);
+        return response()->json(City::where('name', 'like', "%$q%")->orderBy('order', 'asc')->get(), 200);
+        //return City::where('name', 'like', "%$q%")->orderBy('order', 'asc')->paginate(20, ['id', 'name', 'pic', 'description', 'latitude', 'longitude']);
+    }
+    public function getCity($id)
+    {        
+        $city = City::findOrFail($id);         
+        return response()->json($city, 200);
     }
 
     public function metro(Request $request)
@@ -120,5 +144,9 @@ class CompanyController extends Controller
     {
         $q = $request->get('q');
         return Company::where('title', 'like', "%$q%")->paginate(null, ['id', 'title']);
+    }
+    public function getCategories()
+    {        
+      return response()->json(Category::orderBy('order', 'asc')->limit(9)->get());
     }
 }

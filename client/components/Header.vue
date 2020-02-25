@@ -1,12 +1,12 @@
 <template>
 <header class="header">     
-      <nav class="navbar navbar-expand-lg fixed-top shadow navbar-light bg-white">
+      <nav class="navbar navbar-expand-lg fixed-top shadow navbar-light bg-white py-3">
         <div class="container-fluid">
           <div class="d-flex align-items-center">
            <router-link :to="{ name: 'main' }" class="navbar-brand py-1" >               
                <img src="/img/logo.svg" alt="logo" >
               </router-link>          
-            <form action="#" id="search" class="form-inline d-none d-sm-flex">
+            <form action="#" id="search" class="form-inline d-none d-sm-flex ">
               <div class="input-label-absolute input-label-absolute-left input-reset input-expand ml-lg-2 ml-xl-3"> 
                 <label for="search_search" class="label-absolute"><i class="fa fa-search"></i><span class="sr-only">What are you looking for?</span></label>
                 <input id="search_search" :placeholder="$t('search_button')" aria-label="Search" class="form-control form-control-sm border-0 shadow-0 bg-gray-200">
@@ -46,7 +46,6 @@
                 {{ $t('add_company') }}
               </router-link>
               </li>
-
                <li  v-if="user>53"  class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-dark"
                href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"

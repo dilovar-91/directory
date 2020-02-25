@@ -1,34 +1,5 @@
 <template>
 <div class="bg-white">
-<client-only>
-<!--<yandex-map 
-    :coords="[company.latitude, company.longitude]"     
-    zoom="13"
-    :controls= "['zoomControl']"
-    :scroll-zoom="false"
-    style="height: 500px; display:block;"
-    class="h-100"    
-  >
-    <ymap-marker        
-      :coords="[company.latitude, company.longitude]" 
-      @click="goToCompany()"
-      marker-id="123" 
-      :hint-content="company.title"      
-      :balloon-template="balloonTemplate(company.id, company.title, company.pictures, company.adress)"              
-      :icon="{
-            layout: 'default#image',
-            imageHref: '/img/car-point.png',
-            imageSize: [55, 55],
-            imageOffset: [-15, -35],               
-        }"
-    />    
-  </yandex-map>-->
- </client-only> 
- <section>
-      <div class="map-wrapper-450">
-        <div id="categoryMap" class="h-100"></div>
-      </div>
-    </section>
   <section class="py-5 bg-gray-100 shadow">
       <div class="container">
         <h1 class="mb-4">{{ city.name || ''}}</h1>
@@ -40,8 +11,7 @@
           </li>          
         </ul>
       </div>
-    </section>    
-
+    </section> 
     <section class="py-5">
       <div class="container">
         <div class="d-flex justify-content-between align-items-center flex-column flex-md-row mb-4">
@@ -115,8 +85,8 @@ layout: "main",
     sort: '',
   }),
   computed: {
-    id() {
-      return Number(this.$route.params.id)
+    slug() {
+      return Number(this.$route.params.slug)
     },
     category_id() {
       return Number(this.$route.query.category) || 0
@@ -131,111 +101,22 @@ layout: "main",
     },
     ...mapGetters({
     authenticated: 'auth/check',
-    companies: 'company/companiesByCity',    
-    city: 'city/city',
-    categories: 'company/categories',
+    category: 'category/category', 
     }),
     
   }, 
-  async fetch({store, error, params: { id, page }}) {     
-    await store.dispatch("company/companiesByCity", {id})    
-    await store.dispatch("company/get_categories")    
-    await store.dispatch("city/fetch_city", {id}).catch((e)=>
+  async fetch({store, error, params: { slug, page }}) {     
+    //wait store.dispatch("company/companiesByCity", {id})    
+    //await store.dispatch("company/companie")    
+    await store.dispatch("category/fetch_category", {slug}).catch((e)=>
       error({statusCode: 404, message: 'This page could not be found'})      
       )
   },
   methods: {
-      goToCompany: function (id = 'empty') {   
-          window.open("/company/" + id, "_blank");    
-          //this.$router.push("/company/" + slug)
-      },
-      balloonTemplate: function(id=null, title='', pic=null, adress=null) {
-      return `<a href="/company/`+id+`">
-        <h4 class="warning-text" @click="goToCompany()">`+ title + ', ' + adress +`</h4>
-        <img src="/img/company/`+ pic[0] +`" width="350px">
-      </a>`
-      }         
+      
   }
   
 }
 </script>
 <style scoped>
-.title {
-  font-size: 85px;
-}
-
-.laravel {
-  color: #2e495e;
-}
-
-.nuxt {
-  color: #00c48d;
-}
-
-@media screen and (min-width: 320px) {
-  .pic {
-  height: 165px;
-  }
-}
-
-@media screen and (min-width: 540px) {
-  .pic {
-  height: 190px;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .pic {
-  height: 210px;
-  }
-}
-@media screen and (min-width: 1200px) {
-  .pic {
-    height: 290px;
-  }
-}
-
-@media screen and (min-width: 1400px) {
-  .pic {
-    width: 100%;
-    height: 370px;
-  }
-}
-.pulse {
-  border-radius: 100%;  
-  cursor: pointer;
-  box-shadow: 0 0 0 rgba(204,169,44, 0.4);
-  animation: pulse 2s infinite;
-}
-.pulse:hover {
-  animation: none;
-}
-@-webkit-keyframes pulse {
-  0% {
-    -webkit-box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
-  }
-  70% {
-      -webkit-box-shadow: 0 0 0 20px rgba(204,169,44, 0);
-  }
-  100% {
-      -webkit-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
-  }
-}
-@keyframes pulse {
-  0% {
-    -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
-    box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
-  }
-  70% {
-      -moz-box-shadow: 0 0 0 20px rgba(204,169,44, 0);
-      box-shadow: 0 0 0 20px rgba(204,169,44, 0);
-  }
-  100% {
-      -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
-      box-shadow: 0 0 0 0 rgba(204,169,44, 0);
-  }
-}
-
-
-
 </style>

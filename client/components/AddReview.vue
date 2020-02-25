@@ -18,7 +18,8 @@
                       <div class="form-group">
                         <label for="rating" class="form-label">Оценка *</label>
                         <select name="rating" id="rating" v-model="review.rating" class="custom-select focus-shadow-0">
-                          <option value="5" selected>&#9733;&#9733;&#9733;&#9733;&#9733; (5/5)</option>
+                          <option disabled value="">Выберите один из вариантов</option>
+                          <option value="5" >&#9733;&#9733;&#9733;&#9733;&#9733; (5/5)</option>
                           <option value="4">&#9733;&#9733;&#9733;&#9733;&#9734; (4/5)</option>
                           <option value="3">&#9733;&#9733;&#9733;&#9734;&#9734; (3/5)</option>
                           <option value="2">&#9733;&#9733;&#9734;&#9734;&#9734; (2/5)</option>

@@ -1,12 +1,14 @@
 import axios from 'axios'
 export const state = () => ({
   companies: [],
+  companiesByCity: [],
   company: {},
   searchResult: [],
   topCompanies: [],
   coords: [],
   cities: [],
-  metros: [],
+  metros: [],  
+  categories: []  
 })
 export const getters = {
   allCompany: (state) => {
@@ -20,6 +22,9 @@ export const getters = {
   },
   topCompanies: (state) => {
     return state.topCompanies
+  },
+  companiesByCity: (state) => {
+    return state.companiesByCity
   },
   coords: (state) => {
     return state.coords
@@ -39,7 +44,9 @@ export const getters = {
   metros: (state) => {
     return state.metros
   },
-
+  categories: (state) => {
+    return state.categories
+  }
 }
 export const mutations = {
   set (state, companies) {
@@ -50,6 +57,9 @@ export const mutations = {
   },
   setTopCompanies (state, topCompanies) {
     state.topCompanies = topCompanies
+  },
+  setCompaniesByCity (state, companiesByCity) {
+    state.companiesByCity = companiesByCity
   },
   setCompany (state, company) {
     state.company = company
@@ -65,6 +75,9 @@ export const mutations = {
   },
   setMetros (state, metros) {
     state.metros = metros
+  },
+  setCategories (state, categories) {
+    state.categories = categories
   },
   clearCompanies (state) {
     state.companies = []
@@ -163,5 +176,22 @@ export const actions = {
 
   async set ({ commit }, company) {
     await commit('set', company)
-  }
+  },
+
+  async companiesByCity ({ commit }, { id }) {
+    await this.$axios.get(`/cities/${id}`)
+      .then((res) => {
+        if (res.status === 200) {
+          commit('setCompaniesByCity', res.data)
+        }
+      })
+  },
+  async get_categories ({ commit }) {
+    await this.$axios.get(`/categories`)
+      .then((res) => {
+        if (res.status === 200) {
+          commit('setCategories', res.data)
+        }
+      })
+  },
 }

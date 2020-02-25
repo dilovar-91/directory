@@ -19,7 +19,7 @@
             </div>
             <div class="col-md-6 col-lg-3 d-flex align-items-center form-group">
               <div class="input-label-absolute input-label-absolute-right w-100">                           
-               <v-select class="style-chooser" label="name" :placeholder="$t('search_city')"  :options="cities.data" v-model="city"></v-select>
+               <v-select class="style-chooser" label="name" :placeholder="$t('search_city')"  :options="cities" v-model="city"></v-select>
               </div>
             </div>
             <div class="col-md-6 col-lg-3 d-flex align-items-center form-group no-divider">

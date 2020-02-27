@@ -49,8 +49,6 @@
             <p class="mb-3 mb-md-0"><strong>{{companies.total}}</strong> results found {{category_id}}</p>
           </div>
           <div class="col-3 input-label-absolute input-label-absolute-right w-100">
-            
-          
             <v-select class="style-chooser selectpicker" label="name" v-model="sort" placeholder="Sort by" :options="[{id: 1, name: 'Popular'}, {id: 2, name: 'Recommended'},  {id: 3, name: 'Oldest'},  {id: 4, name: 'Closest'} ]"></v-select> 
           </div>
         </div>

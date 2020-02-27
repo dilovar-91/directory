@@ -1,27 +1,23 @@
 <template>
 <div class="bg-white">
-  <section class="py-5 bg-gray-100 shadow">
-      <div class="container">
-        <h1 class="mb-4">{{ city.name || ''}}</h1>
-        <p class="lead mb-5">{{city.description}}</p>
-        <h5>{{$t('category')}}</h5>
-        <ul class="nav nav-pills-custom">
-          <li class="nav-item" v-for="category in categories" :key="category.id">
-            <router-link :to="'/city/'+id+'/?category='+category.id" class="nav-link active">{{category.name}}</router-link>
-          </li>          
-        </ul>
+  <div class="container-fluid pt-5 pb-3 border-bottom px-lg-5">
+      <div class="row">
+        <div class="col-xl-8">
+          <h1>Список организации по категории <span class="primary">{{ category.name || ''}}</span></h1>
+          <p class="lead text-muted">{{category.description}}</p>
+        </div>
       </div>
-    </section> 
+    </div>  
     <section class="py-5">
       <div class="container">
         <div class="d-flex justify-content-between align-items-center flex-column flex-md-row mb-4">
           <div class="mr-3">
-            <p class="mb-3 mb-md-0"><strong>{{companies.total}}</strong> results found {{category_id}}</p>
+            <p class="mb-3 mb-md-0">Всего <strong class="text-danger">{{companies.total}}</strong> организации по категории <strong class="text-primary">"{{ category.name || ''}}"</strong> </p>
           </div>
-          <div class="col-3 input-label-absolute input-label-absolute-right w-100">
+          <div class="col-xl-3 col-xs-4 input-label-absolute input-label-absolute-right w-100">
             
           
-            <v-select class="style-chooser selectpicker" label="name" v-model="sort" placeholder="Sort by" :options="[{id: 1, name: 'Popular'}, {id: 2, name: 'Recommended'},  {id: 3, name: 'Oldest'},  {id: 4, name: 'Closest'} ]"></v-select> 
+            <v-select class="style-chooser selectpicker" label="name" v-model="sort" placeholder="Сортировка" :options="[{id: 1, name: 'Популярный'}, {id: 2, name: 'Рекомендации'},  {id: 3, name: 'Старые'},  {id: 4, name: 'Новые'} ]"></v-select> 
           </div>
         </div>
         <div class="row">
@@ -55,7 +51,7 @@
               </div>         
           
         </div>       
-        <list-pagination :page="this.page" :max-page="maxPage" route="companies" />
+        <!--<list-pagination :page="this.page" :max-page="maxPage" route="companies" />-->
       </div>
     </section>
 </div>
@@ -73,9 +69,9 @@ layout: "main",
    ListPagination,
   }, 
   head () {
-    return { title: 'Компании находящийся в городе '+this.city.name,
+    return { title: 'Компании находящийся в городе ',
     meta: [
-        { hid: 'description', name: 'description', content: this.city.description }
+        { hid: 'description', name: 'description', content: '' }
     ],
     }
   },
@@ -86,31 +82,34 @@ layout: "main",
   }),
   computed: {
     slug() {
-      return Number(this.$route.params.slug)
+      return String(this.$route.params.slug) || null
     },
     category_id() {
-      return Number(this.$route.query.category) || 0
+      return Number(this.$route.query.category) || 1
     },
-
+    category() {      
+      return this.$store.getters['category/getCategory'](this.slug)
+    },
+    id(){
+      this.category.id
+      return this.category.id
+    }, 
     page() {
       return Number(this.$route.params.page) || 1
     },
-
     maxPage() {
       return Number(this.companies.last_page)
     },
     ...mapGetters({
     authenticated: 'auth/check',
-    category: 'category/category', 
+    companies: 'company/companiesByCategory', 
     }),
     
   }, 
-  async fetch({store, error, params: { slug, page }}) {     
-    //wait store.dispatch("company/companiesByCity", {id})    
-    //await store.dispatch("company/companie")    
-    await store.dispatch("category/fetch_category", {slug}).catch((e)=>
-      error({statusCode: 404, message: 'This page could not be found'})      
-      )
+  async fetch({store, params}) {    
+    await store.dispatch("category/getCategories")
+    await store.dispatch("company/companiesByCategory", {id:params.id})
+    await store.dispatch("category/getCategory", {slug:params.slug})
   },
   methods: {
       

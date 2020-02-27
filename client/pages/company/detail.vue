@@ -8,8 +8,8 @@
 
           <!-- Slides-->
           <div class="swiper-slide" v-for="pic in company.pictures" :key="pic">
-            <a :href="'/img/companies/'+pic" data-toggle="gallery-top">
-            <img :src="'/img/companies/'+pic" alt="company.title" class="img-fluid border pic" >
+            <a :href="'/img/companies/'+pic"  data-toggle="gallery-top">
+            <img :src="'/img/companies/'+pic" :alt="company.title" class="border pic img-fluid" >
             </a>
           </div>
         </div>
@@ -22,7 +22,7 @@
       <div class="row">
         <div class="col-lg-7"> 
           <div class="text-block">
-            <p class="text-primary"><i class="fa-map-marker-alt fa mr-1"></i> {{company.city['name']}}, {{company.metro['name']+',' || '' }}  {{company.adress || '' }}</p>
+            <p class="text-primary"><i class="fa-map-marker-alt fa mr-1"></i> {{company.city['name'] || ''}}, <span v-if="company.metro !== null">{{company.metro['name'] + ',' || '' }}</span>  {{company.adress || '' }}</p>
             <h1>{{company.title}}</h1>
             <p class="text-muted text-uppercase mb-4">{{company.category['name'] || ''}}</p>
            
@@ -50,7 +50,7 @@
               </div>
             </div>
           </div>
-          <div class="text-block">
+          <div class="text-block" v-if="company.keywords !== null">
             <h4 class="mb-0 mb-2">{{$t('keywords')}}</h4>            
             <ul class="list-inline">             
               <li class="list-inline-item mb-2" v-for="keyword in makeArray(company.keywords)" :key="keyword"><span class="badge badge-pill badge-light p-3 text-muted font-weight-normal"><i class="fa fa-check text-primary"></i><router-link :to="'/search?keyword='+keyword"> {{keyword}}</router-link></span></li>
@@ -216,8 +216,7 @@ layout: "main",
     await store.dispatch("review/fetch_item", {id})  
   },
   methods: {
-      makeArray(keywords){            
-            
+      makeArray(keywords){
             return keywords.split(",");
       },
       setLike(e, id){   
@@ -241,17 +240,6 @@ layout: "main",
 }
 </script>
 <style scoped>
-.title {
-  font-size: 85px;
-}
-
-.laravel {
-  color: #2e495e;
-}
-
-.nuxt {
-  color: #00c48d;
-}
 
 @media screen and (min-width: 320px) {
   .pic {
@@ -282,41 +270,4 @@ layout: "main",
     height: 370px;
   }
 }
-.pulse {
-  border-radius: 100%;  
-  cursor: pointer;
-  box-shadow: 0 0 0 rgba(204,169,44, 0.4);
-  animation: pulse 2s infinite;
-}
-.pulse:hover {
-  animation: none;
-}
-@-webkit-keyframes pulse {
-  0% {
-    -webkit-box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
-  }
-  70% {
-      -webkit-box-shadow: 0 0 0 20px rgba(204,169,44, 0);
-  }
-  100% {
-      -webkit-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
-  }
-}
-@keyframes pulse {
-  0% {
-    -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
-    box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
-  }
-  70% {
-      -moz-box-shadow: 0 0 0 20px rgba(204,169,44, 0);
-      box-shadow: 0 0 0 20px rgba(204,169,44, 0);
-  }
-  100% {
-      -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
-      box-shadow: 0 0 0 0 rgba(204,169,44, 0);
-  }
-}
-
-
-
 </style>

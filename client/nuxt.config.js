@@ -23,7 +23,7 @@ module.exports = {
       { hid: 'description', name: 'description', content: 'Nuxt.js project' }
     ],
     bodyAttrs: {
-      //style: 'padding-top: 72px;'
+      style: 'padding-top: 72px;'
     },
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/img/favicon.png' },
@@ -34,9 +34,10 @@ module.exports = {
     ]
     ,
     script: [      
-        { src: '/js/jquery.min.js', body: true },       
-        { src: '/js/jquery.magnific-popup.min.js', body: true },       
-        { src: '/js/theme.js', body: true },       
+        { src: '/js/jquery.min.js', defer: true },                
+        { src: '/js/jquery.magnific-popup.min.js', defer: true },
+        { src: '/js/theme.js', defer: true },       
+             
     ]    
   },
 
@@ -49,7 +50,6 @@ module.exports = {
   css: [
     { src: '~assets/sass/app.scss', lang: 'scss' },
     { src: 'swiper/dist/css/swiper.css'},
-    
   ], 
 
   plugins: [

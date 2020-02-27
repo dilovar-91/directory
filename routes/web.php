@@ -12,6 +12,7 @@
 */
 Route::get('/companies', 'Api\CompanyController@getCompanies');
 Route::get('/topcompanies', 'Api\CompanyController@getTopCompanies');
+Route::get('/companies/category/{id}', 'Api\CompanyController@getCompaniesByCategory');
 Route::get('/coords', 'Api\CompanyController@getAllCoords');
 Route::get('/search', 'Api\CompanyController@searchCompanies');
 Route::get('/company/{id}', 'Api\CompanyController@getCompany');
@@ -27,9 +28,11 @@ Route::post('/review/setreview', 'Api\ReviewController@setrating');
 
 Route::get('/cities', 'Api\CompanyController@cities')->name('api.cities');
 Route::get('/cities/{id}', 'Api\CompanyController@getCompaniesByCity')->name('api.companybycity');
+
 Route::get('/city/{id}', 'Api\CompanyController@getCity')->name('api.city');
 Route::get('/metros', 'Api\CompanyController@metro')->name('api.metro');
 Route::get('/categories', 'Api\CompanyController@getCategories')->name('api.categories');
+Route::get('/category/{slug}', 'Api\CompanyController@getCategoryBySlug')->name('api.categorybyslug');
 
 
 Route::get('{path}', function () {

@@ -25,7 +25,7 @@ const routes = [
   { path: '/contact', name: 'contact', component: page('contact.vue') },
   { path: '/cities', name: 'cities', component: page('main.vue') },
   { path: '/categories', name: 'categories', component: page('main.vue') },
-  { path: '/category/:slug?', name: 'category', component: page('categories/index.vue') },
+  { path: '/category/:slug?', name: 'category-slug', component: page('categories/index.vue') },
   { path: '/add_company', name: 'add_company', component: page('auth/login.vue') },
   { path: '/settings',
     component: page('settings/index.vue'),

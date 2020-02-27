@@ -13,9 +13,11 @@ export const getters = {
   total_items: (state) => {
     return state.categories.length
   },
-  categorybyid: state  =>{
-    return state.categories.find(category =>category.id = 1)
-  }
+  categorybyid: (state) => (slug) =>{
+    return state.categories.find(category =>category.slug == slug)
+  },
+  getCategory: state => (slug) => state.categories.find(category => category.slug == slug),
+
 
 }
 export const mutations = {

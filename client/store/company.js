@@ -1,7 +1,7 @@
-import axios from 'axios'
 export const state = () => ({
   companies: [],
   companiesByCity: [],
+  companiesByCategory: [],
   company: {},
   searchResult: [],
   topCompanies: [],
@@ -25,6 +25,9 @@ export const getters = {
   },
   companiesByCity: (state) => {
     return state.companiesByCity
+  },
+  companiesByCategory: (state) => {
+    return state.companiesByCategory
   },
   coords: (state) => {
     return state.coords
@@ -60,6 +63,9 @@ export const mutations = {
   },
   setCompaniesByCity (state, companiesByCity) {
     state.companiesByCity = companiesByCity
+  },
+  setCompaniesByCategory (state, companiesByCategory) {
+    state.companiesByCategory = companiesByCategory
   },
   setCompany (state, company) {
     state.company = company
@@ -183,6 +189,14 @@ export const actions = {
       .then((res) => {
         if (res.status === 200) {
           commit('setCompaniesByCity', res.data)
+        }
+      })
+  },
+  async companiesByCategory ({ commit }, { id }) {
+    await this.$axios.get(`/companies/category/${id}`)
+      .then((res) => {
+        if (res.status === 200) {
+          commit('setCompaniesByCategory', res.data)
         }
       })
   },

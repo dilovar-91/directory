@@ -12,7 +12,9 @@
         </div>
         <div class="row">
           <div class="d-flex align-items-lg-stretch mb-4 col-lg-4" v-for="category in categories" :key="category.id">
-            <div :style="'background: center center url(/img/categories/'+category.background+') no-repeat; background-size: cover;'" class="card shadow-lg border-0 w-100 border-0 hover-animate"><nuxt-link :to="'/category/'+category.slug" class="tile-link"> </nuxt-link>
+            <div :style="'background: center center url(/img/categories/'+category.background+') no-repeat; background-size: cover;'" class="card shadow-lg border-0 w-100 border-0 hover-animate">
+            <router-link :to="{ name : 'category-slug', params : { slug : category.slug, id : category.id } }" class="tile-link"></router-link>
+            <!--<nuxt-link :to="'/category/'+category.slug" class="tile-link"> </nuxt-link>-->
               <div class="d-flex align-items-center h-100 text-nuxt-link justify-content-center py-6 py-lg-7">
                 <h3 class="text-shadow text-uppercase mb-0">{{category.name}}</h3>
               </div>

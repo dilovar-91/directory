@@ -24,7 +24,7 @@
             </div>
             <div class="col-md-6 col-lg-3 d-flex align-items-center form-group no-divider">
               <div class="input-label-absolute input-label-absolute-right w-100">
-                <v-select class="style-chooser" label="name" v-model="type" :placeholder="$t('search_service_type')" :options="[{id: 1, name: 'Продажа'}, {id: 2, name: 'Сервис'},  {id: 3, name: 'Автозапчасти'},  {id: 4, name: 'Страховка'} ]"></v-select>  
+                <v-select class="style-chooser" label="name" v-model="type" :placeholder="$t('search_service_type')" :options="categories"></v-select>  
               </div>
             </div>
             <div class="col-lg-2 form-group mb-0">
@@ -50,6 +50,7 @@ export default {
   },
   beforeCreate() {
   this.$store.dispatch('company/get_cities')
+  //this.$store.dispatch('category/get_categories')
 },
   
   methods: {
@@ -67,6 +68,7 @@ export default {
   
    computed: mapGetters({    
     cities: 'company/cities',    
+    categories: 'category/categories',    
   })
 }
 </script>

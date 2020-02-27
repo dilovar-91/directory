@@ -145,6 +145,11 @@ class CompanyController extends Controller
         $q = $request->get('q');
         return Company::where('title', 'like', "%$q%")->paginate(null, ['id', 'title']);
     }
+
+    public function getCompaniesByCategory($category_id)
+    {        
+        return Company::where('category_id', $category_id)->with('city', 'metro', 'category')->paginate(12);
+    }
     public function getCategories()
     {        
       return response()->json(Category::orderBy('order', 'asc')->limit(9)->get());

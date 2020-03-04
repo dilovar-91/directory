@@ -58,8 +58,7 @@ module.exports = {
     '~plugins/vform',
     '~plugins/axios',
     '~plugins/fontawesome',
-    { src: '~/plugins/cool-lightbox', ssr: false },
-    //'~plugins/nuxt-client-init', // Comment this for SSR
+    { src: '~/plugins/lightGallery.client.js', ssr: false },  
     { src: '~plugins/bootstrap', mode: 'client' },
     { src: '~plugins/swiper.js', mode: 'client' },
     { src: '~plugins/vue-select.js', mode: 'client' },

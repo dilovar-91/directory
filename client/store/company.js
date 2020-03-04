@@ -178,22 +178,19 @@ export const actions = {
         console.log(error)
     });
   },
-
-
   async set ({ commit }, company) {
     await commit('set', company)
   },
-
-  async companiesByCity ({ commit }, { id }) {
-    await this.$axios.get(`/cities/${id}`)
+  async companiesByCity ({ commit }, { slug }) {
+    await this.$axios.get(`/companies/city/${slug}`)
       .then((res) => {
         if (res.status === 200) {
           commit('setCompaniesByCity', res.data)
         }
       })
   },
-  async companiesByCategory ({ commit }, { id }) {
-    await this.$axios.get(`/companies/category/${id}`)
+  async companiesByCategory ({ commit }, { slug }) {
+    await this.$axios.get(`/companies/category/${slug}`)
       .then((res) => {
         if (res.status === 200) {
           commit('setCompaniesByCategory', res.data)

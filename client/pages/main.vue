@@ -19,7 +19,22 @@
       </div>
     </section>
 
-    <Category></Category>
+    <section class="py-2">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md-8">
+            <p class="subtitle text-primary">{{$t('popular-categories')}}</p>
+            <h2>{{$t('whats-trending')}}</h2>
+          </div>
+          <div class="col-md-4 d-md-flex align-items-center justify-content-end"><router-link to="/categories" class="text-muted text-sm">
+               
+              {{$t('all-categories')}}<i class="fas fa-angle-double-right ml-2"></i></router-link></div>
+        </div>
+        <Category></Category>
+      </div>
+    </section>
+
+    
     <Popular></Popular>
     <RecentReviews></RecentReviews>
     <section class="py-4 bg-gray-100"> 

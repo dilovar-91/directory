@@ -50,8 +50,8 @@ export const actions = {
         }
       })
   },
-  async fetch_city ({ commit }, { id }) {
-    await this.$axios.get(`/city/${id}`)
+  async fetch_city ({ commit }, { slug }) {
+    await this.$axios.get(`/city/${slug}`)
       .then((res) => {
         if (res.status === 200) {
           commit('setcity', res.data)

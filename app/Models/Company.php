@@ -24,6 +24,12 @@ class Company extends Model
     {        
         return $query->where('title', 'LIKE', '%' . $keyword . '%');        
     }
+    public function scopeFindByCategorySlug($query, $categorySlug)
+    {        
+        return $query->whereHas('category', function ($query) use ($categorySlug) {
+            $query->where('slug', $categorySlug);
+        });        
+    }
 
     public function metro()
     {

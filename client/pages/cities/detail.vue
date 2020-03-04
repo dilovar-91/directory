@@ -135,10 +135,10 @@ layout: "main",
     }),
     
   }, 
-  async fetch({store, error, params: { id, page }}) {     
-    await store.dispatch("company/companiesByCity", {id})    
+  async fetch({store, error, params: {slug, page}}) {     
+    await store.dispatch("company/companiesByCity", {slug})    
     await store.dispatch("company/get_categories")    
-    await store.dispatch("city/fetch_city", {id}).catch((e)=>
+    await store.dispatch("city/fetch_city", {slug}).catch((e)=>
       error({statusCode: 404, message: 'This page could not be found'})      
       )
   },
@@ -199,41 +199,4 @@ layout: "main",
     height: 370px;
   }
 }
-.pulse {
-  border-radius: 100%;  
-  cursor: pointer;
-  box-shadow: 0 0 0 rgba(204,169,44, 0.4);
-  animation: pulse 2s infinite;
-}
-.pulse:hover {
-  animation: none;
-}
-@-webkit-keyframes pulse {
-  0% {
-    -webkit-box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
-  }
-  70% {
-      -webkit-box-shadow: 0 0 0 20px rgba(204,169,44, 0);
-  }
-  100% {
-      -webkit-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
-  }
-}
-@keyframes pulse {
-  0% {
-    -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
-    box-shadow: 0 0 0 0 rgba(204,169,44, 0.4);
-  }
-  70% {
-      -moz-box-shadow: 0 0 0 20px rgba(204,169,44, 0);
-      box-shadow: 0 0 0 20px rgba(204,169,44, 0);
-  }
-  100% {
-      -moz-box-shadow: 0 0 0 0 rgba(204,169,44, 0);
-      box-shadow: 0 0 0 0 rgba(204,169,44, 0);
-  }
-}
-
-
-
 </style>

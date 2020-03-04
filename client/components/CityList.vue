@@ -2,7 +2,7 @@
   <div v-swiper:mySwiper="swiperOption" class="guides-slider" >
     <div class="swiper-wrapper pb-5">
       <div class="swiper-slide h-auto px-2" v-for="city in cities" :key="city.id">
-      <div class="card card-poster gradient-overlay mb-4 mb-lg-0"><router-link :to="'/city/'+city.id" class="tile-link"></router-link><img :src="'/img/cities/'+city.pic" :alt="city.name" class="bg-image rounded">
+      <div class="card card-poster gradient-overlay mb-4 mb-lg-0"><router-link :to="{ name : 'city-detail', params : { slug : city.slug, id : city.id } }" class="tile-link"></router-link><img :src="'/img/cities/'+city.pic" :alt="city.name" class="bg-image rounded">
                   <div class="card-body overlay-content">
                     <h6 class="card-title text-shadow text-uppercase">{{city.name}}</h6>                    
                   </div>

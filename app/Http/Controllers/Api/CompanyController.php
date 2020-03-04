@@ -128,9 +128,9 @@ class CompanyController extends Controller
         return response()->json(City::where('name', 'like', "%$q%")->orderBy('order', 'asc')->get(), 200);
         //return City::where('name', 'like', "%$q%")->orderBy('order', 'asc')->paginate(20, ['id', 'name', 'pic', 'description', 'latitude', 'longitude']);
     }
-    public function getCity($id)
+    public function getCity($slug)
     {        
-        $city = City::findOrFail($id);         
+        $city = City::where('slug', 'like', $slug)->orWhere('id', $slug)->first();         
         return response()->json($city, 200);
     }
 
@@ -146,12 +146,15 @@ class CompanyController extends Controller
         return Company::where('title', 'like', "%$q%")->paginate(null, ['id', 'title']);
     }
 
-    public function getCompaniesByCategory($category_id)
+    public function getCompaniesByCategory($slug)
     {        
-        return Company::where('category_id', $category_id)->with('city', 'metro', 'category')->paginate(12);
+        return Company::FindByCategorySlug($slug)->with('city', 'metro', 'category')->paginate(12);
     }
-    public function getCategories()
+    public function getCompaniesByCitySlug(Request $request, $citySlug)
     {        
-      return response()->json(Category::orderBy('order', 'asc')->limit(9)->get());
-    }
+        return Company::whereHas('city', function ($query) use ($citySlug) {
+            $query->where('slug', $citySlug);
+        })->with('city', 'metro', 'category')->paginate(12);
+    }    
+    
 }

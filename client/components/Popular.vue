@@ -18,7 +18,7 @@
 
 <div data-marker-id="59c0c8e33b1527bfe2abaf92" class="w-100 h-100 hover-animate">
                 <div class="card h-100 border-0 shadow">
-                  <div class="card-img-top overflow-hidden gradient-overlay"> <img :src="'/img/companies/'+company.pictures[0]" alt="Modern, Well-Appointed Room" class="img-fluid" style="height: 166px;"><router-link :to="'/category/'+company.category['id']" class="tile-link"></router-link>
+                  <div class="card-img-top overflow-hidden gradient-overlay"> <img :src="'/img/companies/'+company.pictures[0]" alt="Modern, Well-Appointed Room" class="img-fluid" style="height: 166px;"><router-link :to="'/category/'+company.category['slug']" class="tile-link"></router-link>
                     <div class="card-img-overlay-bottom z-index-20">
                       <div class="media text-white text-sm align-items-center"><img :src="'/img/icon/'+(company.category['icon'] ||  'ico-car.png')" class="avatar avatar-border-white mr-2">
                         <div class="media-body">{{company.category['name'] || ''}}</div>

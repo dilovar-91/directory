@@ -44,8 +44,8 @@ export const actions = {
         }
       })
   },
-  async getCategories ({ commit }) {
-    await this.$axios.get(`/categories`)
+  async getCategories ({ commit }, {limit=0}) {
+    await this.$axios.get(`/categories?limit=${limit}`)
       .then((res) => {
         if (res.status === 200) {
           commit('setCategories', res.data)         

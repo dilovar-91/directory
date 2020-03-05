@@ -1,6 +1,6 @@
 <template>
 <div class="bg-white">
-<section style="background-image: url(img/photo/photo-1525610553991-2bede1a236e2.jpg);" class="d-flex align-items-center dark-overlay bg-cover">
+<section style="background-image: url(img/directory.jpg);" class="d-flex align-items-center dark-overlay bg-cover">
       <div class="container py-6 py-lg-7 text-white overlay-content text-center"> 
         <div class="row">
           <div class="col-xl-10 mx-auto">

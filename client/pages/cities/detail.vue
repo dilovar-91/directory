@@ -1,32 +1,40 @@
 <template>
 <div class="bg-white">
+ 
+ <section>
+      <div class="map-wrapper-450">
+        <div id="categoryMap" class="h-100">
 <client-only>
-<!--<yandex-map 
-    :coords="[company.latitude, company.longitude]"     
-    zoom="13"
+<yandex-map 
+    :coords="[city.latitude, city.longitude]"     
+    zoom="10"
     :controls= "['zoomControl']"
     :scroll-zoom="false"
     style="height: 500px; display:block;"
     class="h-100"    
   >
-    <ymap-marker        
+    <ymap-marker
+      v-for="company in companies.data" :key="company.id"        
       :coords="[company.latitude, company.longitude]" 
-      @click="goToCompany()"
-      marker-id="123" 
+     
+      marker-type="placemark"
+      marker-id="123"
       :hint-content="company.title"      
-      :balloon-template="balloonTemplate(company.id, company.title, company.pictures, company.adress)"              
+      :balloon-template="balloonTemplate(company.id, company.title, company.pictures, company.adress)"                 
       :icon="{
             layout: 'default#image',
-            imageHref: '/img/car-point.png',
-            imageSize: [55, 55],
+            imageHref: '/img/car-marker.png',
+            imageSize: [78, 66],
             imageOffset: [-15, -35],               
         }"
-    />    
-  </yandex-map>-->
- </client-only> 
- <section>
-      <div class="map-wrapper-450">
-        <div id="categoryMap" class="h-100"></div>
+      
+    > 
+    <Baloon title="company.title" ></Baloon>   
+    </ymap-marker>   
+  </yandex-map>
+ </client-only>
+
+        </div>
       </div>
     </section>
   <section class="py-5 bg-gray-100 shadow">
@@ -93,12 +101,14 @@ import { mapGetters } from 'vuex'
 import AddReview from '~/components/AddReview'
 import HeartButton from '~/components/HeartButton'
 import ListPagination from '~/components/ListPagination'
+import Baloon from '~/components/Baloon'
 export default {
 layout: "main", 
   components: {
    AddReview,
    HeartButton,
    ListPagination,
+   Baloon
   }, 
   head () {
     return { title: 'Компании находящийся в городе '+this.city.name,
@@ -144,13 +154,13 @@ layout: "main",
   },
   methods: {
       goToCompany: function (id = 'empty') {   
-          window.open("/company/" + id, "_blank");    
-          //this.$router.push("/company/" + slug)
+          //window.open("/company/" + id, "_blank");    
+          this.$router.push("/company/" + id)
       },
       balloonTemplate: function(id=null, title='', pic=null, adress=null) {
       return `<a href="/company/`+id+`">
         <h4 class="warning-text" @click="goToCompany()">`+ title + ', ' + adress +`</h4>
-        <img src="/img/company/`+ pic[0] +`" width="350px">
+        <img src="/img/companies/`+ pic[0] +`" width="350px">
       </a>`
       }         
   }

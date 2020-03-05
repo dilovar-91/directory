@@ -87,12 +87,11 @@
       :coords="[company.latitude, company.longitude]" 
       @click="goToCompany()"
       marker-id="123" 
-      :hint-content="company.title"      
-      :balloon-template="balloonTemplate(company.id, company.title, company.pictures, company.adress)"              
+      :hint-content="company.title"
       :icon="{
             layout: 'default#image',
-            imageHref: '/img/car-point.png',
-            imageSize: [55, 55],
+            imageHref: '/img/car-marker.png',
+            imageSize: [80, 70],
             imageOffset: [-15, -35],               
         }"  
          
@@ -298,17 +297,6 @@ layout: "main",
         this.$store.dispatch("review/setLike", {id: id})
         e.preventDefault()  
       },
-      
-      goToCompany: function (id = 'empty') {   
-          window.open("/company/" + id, "_blank");    
-          //this.$router.push("/company/" + slug)
-      },
-      balloonTemplate: function(id=null, title='', pic=null, adress=null) {
-      return `<a href="/company/`+id+`">
-        <h4 class="warning-text" @click="goToCompany()">`+ title + ', ' + adress +`</h4>
-        <img src="/img/company/`+ pic[0] +`" width="350px">
-      </a>`
-      }         
   }
   
 }

@@ -12,12 +12,12 @@
       <div class="container">
         <div class="d-flex justify-content-between align-items-center flex-column flex-md-row mb-4">
           <div class="mr-3">
-            <p class="mb-3 mb-md-0">Всего <strong class="text-danger">{{companies.total}}</strong> организации по категории <strong class="text-primary">"{{ category.name || ''}}"</strong> </p>
+            <p class="mb-3 mb-md-0">Всего <strong class="text-danger">{{companies.total}}</strong> организации по категории <strong class="text-primary">"{{ category.name || ''}}"</strong> {{companies.current_page}} </p>
           </div>
           <div class="col-xl-3 col-xs-4 input-label-absolute input-label-absolute-right w-100">
             
           
-            <v-select class="style-chooser selectpicker" label="name" v-model="sort" placeholder="Сортировка" :options="[{id: 1, name: 'Популярный'}, {id: 2, name: 'Рекомендации'},  {id: 3, name: 'Старые'},  {id: 4, name: 'Новые'} ]"></v-select> 
+            <v-select class="style-chooser selectpicker" label="name" v-model="sort" @input="onChange()" placeholder="Сортировка" :options="[{id: 1, name: 'Популярный', type: 'rating'}, {id: 2, name: 'Имя А-Я', type: 'name'},  {id: 3, name: 'Имя Я-А', type: 'name-desc'},  {id: 4, name: 'Кол-во комментарии', type: 'comments'} ]" ></v-select> 
           </div>
         </div>
         <div class="row">
@@ -51,7 +51,7 @@
               </div>         
           
         </div>       
-        <!--<list-pagination :page="this.page" :max-page="maxPage" route="companies" />-->
+        <list-pagination :page="this.page || 1" :max-page="maxPage" :route="'category/'+category.slug" sort="" />
       </div>
     </section>
 </div>
@@ -105,13 +105,16 @@ layout: "main",
   }, 
   async fetch({store, params, error}) {    
     await store.dispatch("category/getCategories", {limit: null})
-    await store.dispatch("company/companiesByCategory", {slug:params.slug}).catch((e)=>
+    await store.dispatch("company/companiesByCategory", {page: params.page || 1, slug:params.slug, sort: params.sort || null}).catch((e)=>
       error({statusCode: 404, message: 'This page could not be found'})      
       ) 
     await store.dispatch("category/fetch_category", {slug:params.slug})
   },
   methods: {
-      
+
+ onChange() {
+      this.$router.push('/category/'+this.slug+'/'+(this.page || 1)+'/'+(this.sort.type|| null))
+  }
   }
   
 }

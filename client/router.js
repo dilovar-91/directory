@@ -24,7 +24,7 @@ const routes = [
   { path: '/contact', name: 'contact', component: page('contact.vue') },
   { path: '/cities', name: 'cities', component: page('main.vue') },
   { path: '/categories', name: 'categories', component: page('categories/index.vue'), props: route => ({ page: (route.query.page || 1) }) },
-  { path: '/category/:slug?', name: 'category-slug', component: page('categories/category.vue') },
+  { path: '/category/:slug?/:page(\\d+)?/:sort?', name: 'category-slug', component: page('categories/category.vue') },
   { path: '/add_company', name: 'add_company', component: page('auth/login.vue') },
   { path: '/settings',
     component: page('settings/index.vue'),

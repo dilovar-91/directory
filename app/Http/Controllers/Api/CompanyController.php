@@ -146,12 +146,47 @@ class CompanyController extends Controller
         return Company::where('title', 'like', "%$q%")->paginate(null, ['id', 'title']);
     }
 
-    public function getCompaniesByCategory($slug)
+    public function getCompaniesByCategory(Request $request, $slug)
     {        
-        return Company::FindByCategorySlug($slug)->with('city', 'metro', 'category')->paginate(12);
+        
+        //$sort=$request->input('sort') || null;
+        //return Company::FindByCategorySlug($slug)->with('city', 'metro', 'category')->paginate(12);
+             
+        $page = $request->input('page');  
+        $sort = $request->input('sort');        
+        $order = "";
+        switch ($sort) {
+            case 'rating':
+                $order = ['avg_rating', 'desc'];
+                break;
+            case 'name':
+                $order = ['title', 'asc'];
+                break;
+            case 'name-desc':
+                $order = ['title', 'desc'];
+                break;
+            case 'comments':
+                $order = ['review_count', 'desc'];
+                break;
+            default: $order = ['id', 'desc'];
+        }
+        
+        $companies = Company::with('metro', 'city', 'category')
+        ->withCount(['reviews as avg_rating' => function($query) {
+        $query->select(DB::raw('avg(rating)'));
+        $query->where('published', '=', 1);
+    }])
+    ->withCount(['reviews as review_count' => function($query) {
+        $query->where('published', 1);    
+    }])
+    ->orderBy(...$order)     
+    ->paginate(12);   
+    return $companies;     
+
     }
     public function getCompaniesByCitySlug(Request $request, $citySlug)
     {        
+       
         return Company::whereHas('city', function ($query) use ($citySlug) {
             $query->where('slug', $citySlug);
         })->with('city', 'metro', 'category')->paginate(12);

@@ -8,8 +8,8 @@
                 </nuxt-link>
             </li>
             <li class="page-item">
-            <nuxt-link  :to="`/${route}/${maxPage}`" class="page-link waves-effect waves-effect">     
-                <i class="fa fa-angle-right"></i><span >Последняя</span>       
+            <nuxt-link  :to="`/${route}/${maxPage}${sortType}`" class="page-link waves-effect waves-effect">     
+                <i class="fa fa-angle-right"></i><span ></span>       
             </nuxt-link>
             </li>            
           </ul>
@@ -26,16 +26,24 @@ export default {
       type: Number,
       required: true
     },
-
     route: {
       type: String,
       required: true
+    },
+    sort: {
+      type: String,
+      required: false,
+      
     }
   },
   computed: {
     hasMore() {
       return this.page < this.maxPage
+    },
+    sortType(){
+      return '/'+(this.sort || '') 
     }
+
   }
 }
 </script>

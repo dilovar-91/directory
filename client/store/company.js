@@ -189,8 +189,8 @@ export const actions = {
         }
       })
   },
-  async companiesByCategory ({ commit }, { slug }) {
-    await this.$axios.get(`/companies/category/${slug}`)
+  async companiesByCategory ({ commit }, { page, slug, sort }) {
+    await this.$axios.get(`/companies/category/${slug}?page=${page}&sort=${sort}`)
       .then((res) => {
         if (res.status === 200) {
           commit('setCompaniesByCategory', res.data)

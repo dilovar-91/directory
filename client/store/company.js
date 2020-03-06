@@ -2,6 +2,7 @@ export const state = () => ({
   companies: [],
   companiesByCity: [],
   companiesByCategory: [],
+  companiesByKeyword: [],
   company: {},
   searchResult: [],
   topCompanies: [],
@@ -28,6 +29,9 @@ export const getters = {
   },
   companiesByCategory: (state) => {
     return state.companiesByCategory
+  },
+  companiesByKeyword: (state) => {
+    return state.companiesByKeyword
   },
   coords: (state) => {
     return state.coords
@@ -66,6 +70,9 @@ export const mutations = {
   },
   setCompaniesByCategory (state, companiesByCategory) {
     state.companiesByCategory = companiesByCategory
+  },
+  setCompaniesByKeyword (state, companiesByKeyword) {
+    state.companiesByKeyword = companiesByKeyword
   },
   setCompany (state, company) {
     state.company = company
@@ -119,8 +126,6 @@ export const actions = {
         }
       })
   },
-
-  
   async fetch_item ({ commit }, { id }) {
     await this.$axios.get(`/company/${id}`)
       .then((res) => {
@@ -129,27 +134,6 @@ export const actions = {
         }
       })
   },
-
-  async searchCompanies ({ commit }, { page = 1, keyword, prefetch }) {
-    if (!prefetch) {
-      await this.$axios.get(`/search?keyword=${keyword}`)
-        .then((res) => {
-          if (res.status === 200) {
-            commit('setFoundCompany', res.data)
-          }
-        })
-    }
-  },
-
-  async coords ({ commit }) {
-    await this.$axios.get(`/coords`)
-      .then((res) => {
-        if (res.status === 200) {
-          commit('setCoords', res.data)
-        }
-      })
-  }, 
-
   async get_cities ({ commit }) {
     await this.$axios.get(`/cities`)
       .then((res) => {
@@ -181,8 +165,8 @@ export const actions = {
   async set ({ commit }, company) {
     await commit('set', company)
   },
-  async companiesByCity ({ commit }, { slug }) {
-    await this.$axios.get(`/companies/city/${slug}`)
+  async companiesByCity ({ commit }, { page, slug, sort, category }) {
+    await this.$axios.get(`/companies/city/${slug}?page=${page}&category=${category}&sort=${sort}`)
       .then((res) => {
         if (res.status === 200) {
           commit('setCompaniesByCity', res.data)
@@ -202,6 +186,15 @@ export const actions = {
       .then((res) => {
         if (res.status === 200) {
           commit('setCategories', res.data)
+        }
+      })
+  },
+
+  async companiesByKeyword ({ commit }, { keyword, page }) {
+    await this.$axios.get(`/search?keyword=${keyword}?page=${page}`)
+      .then((res) => {
+        if (res.status === 200) {
+          commit('setCompaniesByKeyword', res.data)
         }
       })
   },

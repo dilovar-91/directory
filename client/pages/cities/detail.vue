@@ -13,7 +13,9 @@
     style="height: 500px; display:block;"
     class="h-100"    
   >
+    <div v-if="companies.total>0">
     <ymap-marker
+      
       v-for="company in companies.data" :key="company.id"        
       :coords="[company.latitude, company.longitude]" 
      
@@ -30,7 +32,8 @@
       
     > 
     <Baloon title="company.title" ></Baloon>   
-    </ymap-marker>   
+    </ymap-marker> 
+    </div>  
   </yandex-map>
  </client-only>
 
@@ -41,28 +44,35 @@
       <div class="container">
         <h1 class="mb-4">{{ city.name || ''}}</h1>
         <p class="lead mb-5">{{city.description}}</p>
+        <p class="ml-2 lead text-danger font-weight-bold" v-if="companies.total <= 0" >Организации по категории "{{ category.name || ''}}" в городе {{ city.name || ''}} не существуют.</p>
         <h5>{{$t('category')}}</h5>
-        <ul class="nav nav-pills-custom">
+        <ul class="nav nav-pills-custom" >
           <li class="nav-item" v-for="category in categories" :key="category.id">
-            <router-link :to="'/city/'+id+'/?category='+category.id" class="nav-link active">{{category.name}}</router-link>
+            <router-link :to="'/city/'+slug+'/?category='+category.id" class="nav-link active">{{category.name}}</router-link>
           </li>          
         </ul>
       </div>
     </section>    
-
     <section class="py-5">
-      <div class="container">
+      <div class="container" v-if="companies.total > 0">
         <div class="d-flex justify-content-between align-items-center flex-column flex-md-row mb-4">
           <div class="mr-3">
-            <p class="mb-3 mb-md-0"><strong>{{companies.total}}</strong> results found {{category_id}}</p>
+            <p class="mb3- mb-md-0" >Показано <strong class="text-danger">{{(companies.current_page-1)*companies.per_page+1}}-{{ ( to > companies.total ?  companies.total: to )}} из {{companies.total}}</strong> организации по городу <strong class="text-primary">"{{ city.name || ''}}"</strong></p>
           </div>
           <div class="col-3 input-label-absolute input-label-absolute-right w-100">
-            <v-select class="style-chooser selectpicker" label="name" v-model="sort" placeholder="Sort by" :options="[{id: 1, name: 'Popular'}, {id: 2, name: 'Recommended'},  {id: 3, name: 'Oldest'},  {id: 4, name: 'Closest'} ]"></v-select> 
+           <div class="form-group">
+            <select class="form-control" id="exampleFormControlSelect1" :value="sortSelected" @change="onChange($event)">
+              <option value="1" selected="" disabled>Сортировка</option>
+              <option v-for="str in [{id: 1, name: 'Популярный', type: 'rating'}, {id: 2, name: 'Имя А-Я', type: 'name'},  {id: 3, name: 'Имя Я-А', type: 'name-desc'},  {id: 4, name: 'Кол-во комментарии', type: 'comments'} ]" :key="str.id" :value="str.type" >{{str.name}}</option>
+            </select>
+          </div> 
           </div>
         </div>
-        <div class="row">
+       
           <!-- place item-->
-          <div data-marker-id="59c0c8e33b1527bfe2abaf92" class="hover-animate col-sm-6 col-lg-3 mb-5" v-for="company in companies.data" :key="company.id">
+          <transition-group :duration="{  enter: 2000 }" appear name="list" tag="div" class="row">
+          <div data-marker-id="59c0c8e33b1527bfe2abaf92" class="col-sm-6 col-lg-3 mb-5" :name="transition" mode="out-in" v-for="company in companies.data" :key="company.id">
+              
                 <div class="card h-100 border-0 shadow">
                   <div class="card-img-top overflow-hidden gradient-overlay"> <router-link :to="'/company/'+company.id" ><img :src="'/img/companies/'+company.pictures[0]" :alt="company.title" class="img-fluid" style="height: 185px;"></router-link>
                     <div class="card-img-overlay-bottom z-index-20">
@@ -77,7 +87,7 @@
                     <div class="w-100">
                       <h6 class="card-title"><router-link :to="'/company/'+company.id"  class="text-decoration-none text-dark">{{company.title}}</router-link></h6>
                       <div class="d-flex card-subtitle mb-3">
-                        <p class="flex-grow-1 mb-0 text-muted text-sm">Оценка салона: {{company.ratings_average || 0}}</p>
+                        <p class="flex-grow-1 mb-0 text-muted text-sm">Оценка салона: {{company.avg_rating || 0}}</p>
                         <p class="flex-shrink-1 mb-0 card-stars text-xs text-right"><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i>
                         </p>
                       </div>
@@ -88,10 +98,13 @@
                     </div>
                   </div>
                 </div>
-              </div>         
+              
+              </div> 
+            </transition-group>
+                      
           
-        </div>       
-        <list-pagination :page="this.page" :max-page="maxPage" route="companies" />
+             
+        <list-pagination  :page="this.page || 1" :max-page="maxPage" :route="'city/'+city.slug" :sort="sortSelected" />
       </div>
     </section>
 </div>
@@ -120,22 +133,29 @@ layout: "main",
 
   data: () => ({
     title: process.env.appName,
-    sort: '',
+    transition: 'slide-right',    
   }),
   computed: {
     id() {
       return Number(this.$route.params.id)
     },
-    category_id() {
-      return Number(this.$route.query.category) || 0
+    to() {
+      return this.companies.current_page*this.companies.per_page
     },
-
+    slug() {
+      return String(this.$route.params.slug)
+    },
+    sortSelected() {      
+      return String(this.$route.params.sort || 1)
+    },
     page() {
       return Number(this.$route.params.page) || 1
     },
-
     maxPage() {
       return Number(this.companies.last_page)
+    },
+    category() {      
+      return this.$store.getters['category/category'] 
     },
     ...mapGetters({
     authenticated: 'auth/check',
@@ -145,16 +165,18 @@ layout: "main",
     }),
     
   }, 
-  async fetch({store, error, params: {slug, page}}) {     
-    await store.dispatch("company/companiesByCity", {slug})    
-    await store.dispatch("company/get_categories")    
-    await store.dispatch("city/fetch_city", {slug}).catch((e)=>
+  async fetch({store, error, params, query}) { 
+    await Promise.all([
+     store.dispatch("company/companiesByCity", {page: params.page || 1, slug:params.slug, sort: params.sort || '', category: query.category || ''}),    
+     store.dispatch("company/get_categories"),
+     store.dispatch("category/fetch_category", {slug:query.category} || ''),
+     store.dispatch("city/fetch_city", {slug:params.slug}).catch((e)=>
       error({statusCode: 404, message: 'This page could not be found'})      
       )
+    ])  
   },
   methods: {
-      goToCompany: function (id = 'empty') {   
-          //window.open("/company/" + id, "_blank");    
+      goToCompany: function (id = 'empty') {
           this.$router.push("/company/" + id)
       },
       balloonTemplate: function(id=null, title='', pic=null, adress=null) {
@@ -162,7 +184,11 @@ layout: "main",
         <h4 class="warning-text" @click="goToCompany()">`+ title + ', ' + adress +`</h4>
         <img src="/img/companies/`+ pic[0] +`" width="350px">
       </a>`
-      }         
+      },
+      onChange(event) {
+        this.$router.push('/city/'+this.slug+'/'+(this.page || 1)+'/'+(event.target.value || null))
+    }
+    
   }
   
 }
@@ -208,5 +234,12 @@ layout: "main",
     width: 100%;
     height: 370px;
   }
+}
+.list-enter-active, .list-leave-active {
+  transition: all 1.5s;
+}
+.list-enter, .list-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
 }
 </style>

@@ -30,6 +30,12 @@ class Company extends Model
             $query->where('slug', $categorySlug);
         });        
     }
+    public function scopeFindByCitySlug($query, $citySlug)
+    {        
+        return $query->whereHas('city', function ($query) use ($citySlug) {
+            $query->where('slug', $citySlug);
+        });        
+    }
 
     public function metro()
     {

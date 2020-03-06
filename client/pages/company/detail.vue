@@ -85,7 +85,7 @@
     <ymap-marker 
        
       :coords="[company.latitude, company.longitude]" 
-      @click="goToCompany()"
+      
       marker-id="123" 
       :hint-content="company.title"
       :icon="{

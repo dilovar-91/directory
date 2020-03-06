@@ -3,9 +3,9 @@
   <div class="container-fluid pt-5 pb-3 border-bottom px-lg-5">
       <div class="row">
         <div class="col-xl-8">
-          <h1>Список организации по категории <span class="primary">{{ category.name || ''}}</span></h1>
-          <p class="lead text-muted">{{category.description}}</p>
-          <p class="ml-2 lead text-danger font-weight-bold" v-if="companies.total <= 0" >Организации по категории "{{ category.name || ''}}" не существуют.</p>
+          <h1>Страница поиска </h1>
+          <p class="lead text-muted"></p>
+          <p class="ml-2 lead text-danger font-weight-bold" v-if="companies.total <= 0" >Организации по категории "{{ keyword || ''}}" не существуют.</p>
         </div>
       </div>
     </div>  
@@ -13,15 +13,7 @@
       <div class="container" v-if="companies.total>0">
         <div class="d-flex justify-content-between align-items-center flex-column flex-md-row mb-4">
           <div class="mr-3">
-            <p class="mb3- mb-md-0" >Показано <strong class="text-danger">{{(companies.current_page-1)*companies.per_page+1}}-{{companies.current_page*companies.per_page}} из {{companies.total}}</strong> организации по категории <strong class="text-primary">"{{ category.name || ''}}"</strong></p>
-          </div>
-          <div class="col-xl-3 col-xs-4 input-label-absolute input-label-absolute-right w-100">  
-          <div class="form-group">
-            <select class="form-control" id="exampleFormControlSelect1" :value="sortSelected" @change="onChange($event)">
-              <option value="1" selected="" disabled>Сортировка</option>
-              <option v-for="str in [{id: 1, name: 'Популярный', type: 'rating'}, {id: 2, name: 'Имя А-Я', type: 'name'},  {id: 3, name: 'Имя Я-А', type: 'name-desc'},  {id: 4, name: 'Кол-во комментарии', type: 'comments'} ]" :key="str.id" :value="str.type" >{{str.name}}</option>
-            </select>
-          </div>
+            <p class="mb3- mb-md-0" >Показано <strong class="text-danger">{{(companies.current_page-1)*companies.per_page+1}}-{{companies.current_page*companies.per_page}} из {{companies.total}}</strong> организации по категории <strong class="text-primary">"{{ keyword || ''}}"</strong></p>
           </div>
         </div>
         <div class="row" :name="transition" mode="out-in">
@@ -59,21 +51,17 @@
           </transition-group>   
           
         </div>       
-        <list-pagination  :page="this.page || 1" :max-page="maxPage" :route="'category/'+category.slug" :sort="sortSelected" />
+        <list-pagination  :page="this.page || 1" :max-page="maxPage" :route="'search/'+keyword"  />
       </div>
     </section>
 </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import AddReview from '~/components/AddReview'
-import HeartButton from '~/components/HeartButton'
 import ListPagination from '~/components/ListPagination'
 export default {
 layout: "main", 
   components: {
-   AddReview,
-   HeartButton,
    ListPagination,
   }, 
   head () {
@@ -83,26 +71,15 @@ layout: "main",
     ],
     }
   },
-
   data: () => ({
     title: process.env.appName,
     sort: '',
     transition: 'slide-right',
   }),
   computed: {
-    slug() {
-      return String(this.$route.params.slug) || null
-    },    
-    category() {      
-      return this.$store.getters['category/category'] 
+    keyword() {
+      return String(this.$route.query.keyword) || null
     },
-    sortSelected() {      
-      return String(this.$route.params.sort || 1)
-    },
-    id(){
-      this.category.id
-      return this.category.id
-    }, 
     page() {
       return Number(this.$route.params.page) || 1
     },
@@ -111,28 +88,16 @@ layout: "main",
     },
     ...mapGetters({
     authenticated: 'auth/check',
-    companies: 'company/companiesByCategory', 
+    companies: 'company/companiesByKeyword', 
     }),
-    
   }, 
-  async fetch({store, params, error}) {    
-    
-
+  async fetch({store, query, error}) {    
     await Promise.all([
-      store.dispatch("category/getCategories", {limit: null}),
-      store.dispatch("category/fetch_category", {slug:params.slug}),
-      store.dispatch("company/companiesByCategory", {page: params.page || 1, slug:params.slug, sort: params.sort || null}).catch((e)=>
+      store.dispatch("company/companiesByKeyword", {keyword:query.keyword, page: query.page || 1}).catch((e)=>
       error({statusCode: 404, message: 'This page could not be found'})      
       ) 
     ])   
-    
   },
-  methods: {
-  onChange(event) {
-        this.$router.push('/category/'+this.slug+'/'+(this.page || 1)+'/'+(event.target.value || null))
-    }
-  }
-  
 }
 </script>
 <style scoped>

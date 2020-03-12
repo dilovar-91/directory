@@ -3,6 +3,9 @@
     <Header />    
     <nuxt />
     <Footer />
+    <back-to-top bottom="50px" right="50px">
+  <button type="button" class="btn btn-info btn-to-top"><i class="fa fa-chevron-up"></i></button>
+</back-to-top>
 </div>
 </template>
 

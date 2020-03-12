@@ -22,8 +22,25 @@ class Company extends Model
     
     public function scopeTitle($query,$keyword)
     {        
-        return $query->where('title', 'LIKE', '%' . $keyword . '%');        
+        return $query->where('title', 'LIKE', '%' . $keyword . '%')->orWhere('description', 'LIKE', '%' . $keyword . '%');        
     }
+
+    public function scopeCategory($query,$category)
+    {
+        if(!Empty($category)){
+            return $query->where('category_id',$category);
+        }
+        return $query;
+    }
+
+    public function scopeCity($query,$city)
+    {
+        if(!Empty($city)){
+            return $query->where('city_id',$city);
+        }
+        return $query;
+    }
+
     public function scopeFindByCategorySlug($query, $categorySlug)
     {        
         return $query->whereHas('category', function ($query) use ($categorySlug) {
@@ -52,17 +69,7 @@ class Company extends Model
         return $query->where('company_id', $company->id)->avg('rating');
         
     }
-
-
-    public function scopeCity($query,$city)
-    {
-        if(!Empty($city)){
-            return $query->where('city_id',$city);
-        }
-        return $query;
-    }
-
-
+    
     public function setPicturesAttribute($pictures)
     {
         if (is_array($pictures)) {

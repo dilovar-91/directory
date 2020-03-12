@@ -6,10 +6,10 @@
            <router-link :to="{ name: 'main' }" class="navbar-brand py-1" >               
                <img src="/img/logo.svg" alt="logo" >
               </router-link>          
-            <form action="#" id="search" class="form-inline d-none d-sm-flex ">
+            <form action="/search" id="search" class="form-inline d-none d-sm-flex ">
               <div class="input-label-absolute input-label-absolute-left input-reset input-expand ml-lg-2 ml-xl-3"> 
                 <label for="search_search" class="label-absolute"><i class="fa fa-search"></i><span class="sr-only">What are you looking for?</span></label>
-                <input id="search_search" :placeholder="$t('search_button')" aria-label="Search" class="form-control form-control-sm border-0 shadow-0 bg-gray-200">
+                <input id="search_search" :placeholder="$t('search_button')" name="keyword" aria-label="Search" class="form-control form-control-sm border-0 shadow-0 bg-gray-200">
                 <button type="reset" class="btn btn-reset btn-sm"><i class="fa-times fas"></i></button>
               </div>
             </form>
@@ -17,10 +17,10 @@
           <button type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right"><i class="fa fa-bars"></i></button>
           <!-- Navbar Collapse -->
           <div id="navbarCollapse" class="collapse navbar-collapse">
-            <form action="#" id="searchcollapsed" class="form-inline mt-4 mb-2 d-sm-none">
+            <form action="/search" id="searchcollapsed" class="form-inline mt-4 mb-2 d-sm-none">
               <div class="input-label-absolute input-label-absolute-left input-reset w-100">
                 <label for="searchcollapsed_search" class="label-absolute"><i class="fa fa-search"></i><span class="sr-only">What are you looking for?</span></label>
-                <input id="searchcollapsed_search" placeholder="Search" aria-label="Search" class="form-control form-control-sm border-0 shadow-0 bg-gray-200">
+                <input id="searchcollapsed_search" :placeholder="$t('search_button')"  name="keyword" aria-label="Search" class="form-control form-control-sm border-0 shadow-0 bg-gray-200">
                 <button type="reset" class="btn btn-reset btn-sm"><i class="fa-times fas">           </i></button>
               </div>
             </form>

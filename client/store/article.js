@@ -1,4 +1,3 @@
-import axios from 'axios'
 export const state = () => ({
   articles: [],
   allarticles: [],
@@ -32,7 +31,7 @@ export const mutations = {
 }
 export const actions = {
   async get ({ commit }, { slug }) {
-    await this.$axios.get(`http://truelie/article/${slug}`)
+    await this.$axios.get(`/article/${slug}`)
       .then((res) => {
         if (res.status === 200) {
           commit('setArticle', res.data)
@@ -40,15 +39,15 @@ export const actions = {
       })
   },
   async getArticles ({ commit }) {
-    await this.$axios.get(`http://truelie/articles`)
+    await this.$axios.get(`/articles`)
       .then((res) => {
         if (res.status === 200) {
           commit('setArticles', res.data)
         }
       })
   },
-  async fetch_item ({ commit }, { id }) {
-    await this.$axios.get(`http://truelie/article/${id}`)
+  async fetch_item ({ commit }, { slug }) {
+    await this.$axios.get(`/article/${slug}`)
       .then((res) => {
         if (res.status === 200) {
           commit('setArticle', res.data)

@@ -63,6 +63,7 @@ module.exports = {
     { src: '~plugins/swiper.js', mode: 'client' },
     { src: '~plugins/vue-select.js', mode: 'client' },
     { src: '~plugins/vue-star-rating', mode: 'client' },
+    { src: '~plugins/backtotop', mode: 'client' },
   ],
   modules: [
     '@nuxtjs/axios',

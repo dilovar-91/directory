@@ -20,7 +20,7 @@ Route::get('/company/{id}', 'Api\CompanyController@getCompany');
 Route::get('/reviews/{id}', 'Api\ReviewController@getReviews');
 Route::get('/allreviews', 'Api\ReviewController@getAllReviews');
 Route::get('/articles', 'Api\ArticleController@getArticles');
-Route::get('/article/{id}', 'Api\ArticleController@getArticle');
+Route::get('/article/{slug}', 'Api\ArticleController@getArticle');
 Route::get('/allreviews/{page}', 'Api\ReviewController@getAllReviews');
 Route::get('/img/{image}', 'Api\CompanyController@getImage');
 Route::post('/rating/new', 'Api\ReviewController@setrating');

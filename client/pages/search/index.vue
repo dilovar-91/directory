@@ -26,7 +26,7 @@
                     <div class="card-img-overlay-bottom z-index-20">
                       <div class="media text-white text-sm align-items-center">
                         <img :src="'/img/icon/'+(company.category['icon'] ||  'ico-car.png')" class="avatar avatar-border-white mr-2">
-                       <router-link :to="'/category/'+company.category['id']"> <div class="media-body text-white">{{company.category['name'] || ''}}</div></router-link>
+                       <router-link :to="'/category/'+company.category['slug']"> <div class="media-body text-white">{{company.category['name'] || ''}}</div></router-link>
                       </div>
                     </div>
                     
@@ -51,7 +51,7 @@
           </transition-group>   
           
         </div>       
-        <list-pagination  :page="this.page || 1" :max-page="maxPage" :route="'search/'+keyword"  />
+        <list-pagination  :page="this.page || 1" :max-page="maxPage" :route="'search'" :keyword="keyword" :category="this.category" :city="this.city" />
       </div>
     </section>
 </div>
@@ -78,7 +78,13 @@ layout: "main",
   }),
   computed: {
     keyword() {
-      return String(this.$route.query.keyword) || null
+      return String(this.$route.query.keyword) || ''
+    },
+    category() {
+      return Number(this.$route.query.category) || ''
+    },
+    city() {
+      return Number(this.$route.query.city) || ''
     },
     page() {
       return Number(this.$route.params.page) || 1
@@ -91,11 +97,9 @@ layout: "main",
     companies: 'company/companiesByKeyword', 
     }),
   }, 
-  async fetch({store, query, error}) {    
+  async fetch({store, query, error, params}) {    
     await Promise.all([
-      store.dispatch("company/companiesByKeyword", {keyword:query.keyword, page: query.page || 1}).catch((e)=>
-      error({statusCode: 404, message: 'This page could not be found'})      
-      ) 
+      store.dispatch("company/companiesByKeyword", {keyword:encodeURI(query.keyword), city: query.city || '', category: query.category, page:params.page})
     ])   
   },
 }

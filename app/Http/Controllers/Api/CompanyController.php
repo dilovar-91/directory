@@ -89,9 +89,11 @@ class CompanyController extends Controller
     public function searchCompanies(Request $request)
     {
         $keyword = $request->get('keyword');
-        $query = Company::title($keyword)->with('city', 'metro', 'category')->orderBy('id', 'desc')->where('active', 1);
+        $category = ($request->get('category') > 0 ? $request->get('category') : '');
+        $city = ($request->get('city') > 0 ? $request->get('city') : '');
+        $query = Company::title($keyword)->category($category)->city($city)->with('city', 'metro', 'category')->orderBy('id', 'desc')->where('active', 1);
         $results = $query->paginate(12);
-        //return CompanyResource::collection($results);  
+        //return CompanyResource::collection($results); 
         return response()->json($results, 200);
     }
 
@@ -115,7 +117,6 @@ class CompanyController extends Controller
             readfile($image);
         }
         else return abort(404);
-
     }
 
     public function cities(Request $request)

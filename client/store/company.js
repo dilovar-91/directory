@@ -190,8 +190,8 @@ export const actions = {
       })
   },
 
-  async companiesByKeyword ({ commit }, { keyword, page }) {
-    await this.$axios.get(`/search?keyword=${keyword}?page=${page}`)
+  async companiesByKeyword ({ commit }, { keyword, city, category, page }) {
+    await this.$axios.get(`/search?keyword=${keyword}&city=${city}&category=${category}&page=${page}`)
       .then((res) => {
         if (res.status === 200) {
           commit('setCompaniesByKeyword', res.data)

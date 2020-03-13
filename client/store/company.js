@@ -108,15 +108,13 @@ export const actions = {
     const res = await this.$axios.get('/companies')
     commit('set', res.data.data)
   },
-  async get ({ commit }, { page, prefetch }) {
-    if (!prefetch) {
-      await this.$axios.get(`/companies?page=${page}`)
-        .then((res) => {
-          if (res.status === 200) {
-            commit('set', res.data)
-          }
-        })
-    }
+  async get ({ commit }, { page, slug, sort }) {
+    await this.$axios.get(`/companies?page=${page}&sort=${sort}`)
+      .then((res) => {
+        if (res.status === 200) {
+          commit('setCompanies', res.data)
+        }
+      })
   },
   async getTopCompanies ({ commit }) {
     await this.$axios.get(`/topcompanies`)

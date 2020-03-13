@@ -1,34 +1,18 @@
 <template>
 <div class="bg-white">  
-  
-
 <section>
-  <div class="lightbox-image">
-  <LightGallery
-      :images="addUrl(company.pictures)"
-      :index="index"
-      :disable-scroll="true"
-      @close="index = null"
-      class="lightbox-image"
-    />
-    </div>
-      <!-- Slider main container-->
+  <VGallery :images="addUrl(company.pictures)" :index="index" @close="index = null" />
       <div v-swiper:mySwiper="swiperOption" class="swiper-container detail-slider slider-gallery">
         <!-- Additional required wrapper-->
         <div class="swiper-wrapper">
-
-          <!-- Slides-->
-          <div class="swiper-slide" v-for="(thumb, thumbIndex) in company.pictures" :key="thumbIndex"
-        @click="index = thumbIndex">
+<div class="swiper-slide" v-for="(thumb, imageIndex) in company.pictures" :key="imageIndex" @click="index = imageIndex">
             <!--<a :href="'/img/companies/'+pic"  data-toggle="gallery-top">-->
-            <img :src="'/img/companies/'+thumb" :alt="company.title" class="border pic img-fluid" >
+            <img :src="'/img/companies/'+thumb" :alt="company.title"  class="border pic img-fluid" >
             <!--</a>-->
           </div>
-
-          
         </div>
-        <!--<div class="swiper-pagination swiper-pagination-white"></div>
-        <div class="swiper-button-prev swiper-button-white"></div>
+        <div class="swiper-pagination swiper-pagination-red text-red"></div>
+        <!--<div class="swiper-button-prev swiper-button-white"></div>
         <div class="swiper-button-next swiper-button-white"></div>-->
       </div>
     </section>
@@ -38,12 +22,9 @@
           <div class="text-block">
             <p class="text-primary"><i class="fa-map-marker-alt fa mr-1"></i> {{company.city['name'] || ''}}, <span v-if="company.metro !== null">{{company.metro['name'] + ',' || '' }}</span>  {{company.adress || '' }}</p>
             <h1>{{company.title}}</h1>
-            <p class="text-muted text-uppercase mb-4">{{company.category['name'] || ''}}</p>
-           
-            
-            <h6 class="mb-3 ">{{$t('description')}}</h6>
+            <div class="badge badge-pill p-2 badge-secondary-light">{{company.category['name'] || ''}}</div>
+            <h6 class="mb-3 mt-2 ">{{$t('description')}}</h6>
             <p class="text-muted font-weight-light text-justify ">{{company.description}}</p>
-          
           </div>
           <div class="text-block">
             <h4 class="mb-4">{{$t('contact')}}</h4>
@@ -83,9 +64,7 @@
     class="h-100"    
   >
     <ymap-marker 
-       
       :coords="[company.latitude, company.longitude]" 
-      
       marker-id="123" 
       :hint-content="company.title"
       :icon="{
@@ -94,7 +73,6 @@
             imageSize: [80, 70],
             imageOffset: [-15, -35],               
         }"  
-         
     />    
   </yandex-map>
  </client-only> 
@@ -107,10 +85,6 @@
               <div class="text-md-center mr-4 mr-xl-4"><img src="/img/user-pic.png" alt="Padmé Amidala" class="d-block avatar avatar-xl p-2 mb-2"><span class="text-uppercase text-muted text-sm">{{ review.author }}</span></div>
               <div class="media-body">
                 <h4 class="mb-0 text">Заголовок: {{review.title || ''}} <span class="float-right" ><i class="fa fa-heart pulse" style="color:red;"  @click.prevent="setLike($event, review.id)" ></i> {{review.recomend_count }}</span></h4>
-                
-                <!-- <HeartButton></HeartButton>            -->
-
-                
                 <p class="font-weight-bold mb-0">Дата: {{ $moment(review.created_at).utc().format('DD/MM/YYYY HH:mm')  }} </p>
                 <p class="text-success font-weight-bold mb-0">Преимущество: {{review.pros || ''}}</p>
                 <p class="text-danger font-weight-bold">Недостатки: {{review.cons || ''}}</p>               
@@ -123,10 +97,7 @@
           </div>
         </div>
         <div class="col-lg-5">
-          <div style="top: 100px;" class=" shadow ml-lg-4 rounded sticky-top">           
-
-
-            
+          <div style="top: 100px;" class=" shadow ml-lg-4 rounded sticky-top">    
                 <div class="card-header bg-gray-100 py-2 border-0">
                   <div class="media align-items-center">
                     <div class="media-body">
@@ -141,75 +112,48 @@
                 <div class="card-body">
                   <table class="table text-sm mb-0">
                     <tbody><tr>
-                      <th class="pl-0 border-0">{{$t('phone')}}</th>
+                      <th class="pl-0 border-0"><i class="fa fa-phone mr-1 text-primary"></i>{{$t('phone')}}</th>
                       <td class="pr-0 text-right border-0">{{company.tell}}</td>
                     </tr>
-                    <tr>
-                      <th class="pl-0">{{$t('website')}}</th>
+                    <tr v-if="company.website !== null">
+                      <th class="pl-0"><i class="fa fa-globe mr-1 text-primary"></i>{{$t('website')}}</th>
                       <td class="pr-0 text-right">{{company.website}}</td>
                     </tr>
                     <tr>
-                      <th class="pl-0">{{$t('email')}}</th>
+                      <th class="pl-0"><i class="fa fa-envelope mr-1 text-primary"></i>{{$t('email')}}</th>
                       <td class="pr-0 text-right">{{company.email}}</td>
                     </tr>
                     <tr>
-                      <th class="pl-0">{{$t('job-schedule')}}</th>
+                      <th class="pl-0"><i class="fa fa-calendar mr-1 text-primary"></i>{{$t('job-schedule')}}</th>
                       <td class="pr-0 text-right">{{company.job_schedule}}</td>
                     </tr>
                     
                   </tbody></table>
-                   <div class="text-center"><a :href="company.website" class="btn btn-outline-primary btn-block" target="_blank"> <i class="far fa-paper-plane mr-2"></i>{{$t('go-to-site')}}</a></div>
-                
-              
-                <div class="text-block pb-3">
+                  <div class="text-block pb-3">
                   <div class="media align-items-center">
                     <div class="media-body">
-                      <h6> <a href="detail-rooms.html" class="text-reset">Modern Apt - Vibrant Neighborhood</a></h6>
-                      <p class="text-muted text-sm mb-0">Entire home in New York</p>
-                      <div class="mt-n1"><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-gray-200"></i>
+                      <p class="text-muted text-sm mb-0">Общая оценка на основе <b class="text-danger">{{company.review_count }}</b> отзывов</p>
+                      <div class="mt-n1">
+                        <star-rating :rating="company.avg_rating" :star-size="20" :read-only="true" :show-rating="false" active-color="#007bff" border-color="#007bff" ></star-rating> 
                       </div>
-                    </div><a href="detail-rooms.html"><img src="https://d19m59y37dris4.cloudfront.net/directory/1-4/img/photo/photo-1512917774080-9991f1c4c750.jpg" alt="" width="100" class="ml-3 rounded"></a>
+                    </div><a href="detail-rooms.html"><img :src="'/img/companies/'+company.pictures[0]" alt="" width="100" class="ml-3 rounded"></a>
                   </div>
                 </div>
-                <div class="text-block py-3">
-                  <ul class="list-unstyled mb-0">
-                    <li class="mb-3"><i class="fas fa-users fa-fw text-muted mr-2"></i>3 guests</li>
-                    <li class="mb-0"><i class="far fa-calendar fa-fw text-muted mr-2"></i>Apr 17, 2019 <i class="fas fa-arrow-right fa-fw text-muted mx-3"></i>Apr 18, 2019</li>
-                  </ul>
-                </div>
-                <div class="text-block pt-3 pb-0">
-                  <table class="w-100">
-                    <tbody>
-                      <tr>
-                        <th class="font-weight-normal py-2">$432.02 x 1 night</th>
-                        <td class="text-right py-2">$432.02</td>
-                      </tr>
-                      <tr>
-                        <th class="font-weight-normal pt-2 pb-3">Service fee</th>
-                        <td class="text-right pt-2 pb-3">$67.48</td>
-                      </tr>
-                    </tbody>
-                    <tfoot>
-                      <tr class="border-top">
-                        <th class="pt-3">Total</th>
-                        <td class="font-weight-bold text-right pt-3">$499.50</td>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
+                   <div class="text-center"><a :href="company.website" class="btn btn-outline-primary btn-block" target="_blank"> <i class="far fa-paper-plane mr-2"></i>{{$t('go-to-site')}}</a></div>
+                
               </div>  
 
               <div class="card-footer bg-primary-light py-4 border-0">
                 <div class="media align-items-center">
                   <div class="media-body">
-                    <h6 class="text-primary">Flexible – free cancellation</h6>
-                    <p class="text-sm text-primary opacity-8 mb-0">Cancel within 48 hours of booking to get a full refund. <a href="#" class="text-reset ml-3">More details</a></p>
+                    <h6 class="text-primary">Вы являетесь владельцем этой организации?</h6>
+                    <p class="text-sm text-primary opacity-8 mb-0"><router-link to="/register" class="text-danger">Зарегистрируйтесь</router-link>, управляйте информациями о вашей организации и взаимодействуйте с вашими клиентами.</p>
                   </div>
                   <svg class="svg-icon svg-icon svg-icon-light w-3rem h-3rem ml-2 text-primary">
                     <use xlink:href="#diploma-1"> </use>
                   </svg>
                 </div>
-              </div>       
+              </div>   
           </div>
         </div>
       </div>
@@ -284,10 +228,9 @@ layout: "main",
       addUrl(pictures){
         const result = [];
             for (var x in pictures) {
-              result.push({
-                title: this.company.title,
-                url: '/img/companies/'+pictures[x]
-              })            
+              result.push(
+               '/img/companies/'+pictures[x]
+              )             
            }
            return result
       },

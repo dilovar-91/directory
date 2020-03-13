@@ -25,15 +25,15 @@ class CompanyController extends Controller
         //$results = Company::with('city', 'metro')->orderBy('id', 'desc')->where('active', 1)->paginate(6);
 
             $results = Company::where('active',1)
-        ->with('city', 'metro')
+        ->with('city', 'metro', 'category')
         ->leftJoin('reviews', 'reviews.company_id', '=', 'companies.id')
         ->select(array('companies.*',
-            DB::raw('CAST(AVG(rating) as UNSIGNED ) as ratings_average'),
+            DB::raw('CAST(AVG(rating) as UNSIGNED ) as avg_rating'),
             DB::raw('COUNT(reviews.id) AS review_count')
             ))        
         ->groupBy('companies.id')
-        ->orderBy('ratings_average', 'DESC')
-        ->paginate(6);
+        ->orderBy('avg_rating', 'DESC')
+        ->paginate(12);
         return response()->json($results, 200);
                
     }
@@ -45,29 +45,45 @@ class CompanyController extends Controller
 	->with('city', 'metro', 'category')
 	->leftJoin('reviews', 'reviews.company_id', '=', 'companies.id')
 	->select(array('companies.*',
-        DB::raw('CAST(AVG(rating) as UNSIGNED ) as ratings_average'),
+        DB::raw('CAST(AVG(rating) as UNSIGNED ) as avg_rating'),
         DB::raw('COUNT(reviews.id) AS review_count')
         ))
     //->select('COUNT(companies.id) as count')
 	->groupBy('companies.id')
-    ->orderBy('ratings_average', 'DESC')
+    ->orderBy('avg_rating', 'DESC')
     
 	->paginate(20);
         return response()->json($results, 200);
     }
 
-
+    public function getRelatedCompanies(Request $request)
+    {
+       $title = $request->get('title');
+       $results = Company::where('active', '=', '1')->related($title)
+	->with('city', 'metro', 'category')
+	->leftJoin('reviews', 'reviews.company_id', '=', 'companies.id')
+	->select(array('companies.*',
+        DB::raw('CAST(AVG(rating) as UNSIGNED ) as avg_rating'),
+        DB::raw('COUNT(reviews.id) AS review_count')
+        ))
+	->groupBy('companies.id')
+    ->orderBy('avg_rating', 'DESC')
+	->paginate(6);
+        return response()->json($results, 200);
+    
+    }
+    
     public function getCompaniesByCity($id)
     {
        $results = Company::where('active', '=', '1')->where('city_id', $id)
 	->with('city', 'metro', 'category')
 	->leftJoin('reviews', 'reviews.company_id', '=', 'companies.id')
 	->select(array('companies.*',
-        DB::raw('CAST(AVG(rating) as UNSIGNED ) as ratings_average'),
+        DB::raw('CAST(AVG(rating) as UNSIGNED ) as avg_rating'),
         DB::raw('COUNT(reviews.id) AS review_count')
         ))
 	->groupBy('companies.id')
-    ->orderBy('ratings_average', 'DESC')    
+    ->orderBy('avg_rating', 'DESC')    
 	->paginate(20);
         return response()->json($results, 200);
     }
@@ -79,7 +95,7 @@ class CompanyController extends Controller
         $item = Company::with(['city', 'metro', 'category'])
         ->leftJoin('reviews', 'reviews.company_id', '=', 'companies.id')
         ->select(array('companies.*',
-            DB::raw('CAST(AVG(rating) as UNSIGNED) as ratings_average')
+            DB::raw('CAST(AVG(rating) as UNSIGNED) as avg_rating')
             , DB::raw('COUNT(*) AS review_count')))             
         ->groupBy('companies.id')
         ->findOrFail($id);         
@@ -167,7 +183,6 @@ class CompanyController extends Controller
         }
         
         $companies = Company::FindByCategorySlug($slug)->with('metro', 'city', 'category')
-        
         ->withCount(['reviews as avg_rating' => function($query) {
         $query->select(DB::raw('avg(rating)'));
         $query->where('published', '=', 1);

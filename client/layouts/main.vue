@@ -3,16 +3,16 @@
     <Header />    
     <nuxt />
     <Footer />
+    <client-only>
     <back-to-top bottom="50px" right="50px">
-  <button type="button" class="btn btn-info btn-to-top"><i class="fa fa-chevron-up"></i></button>
+  <button type="button" class="btn btn-primary btn-to-top"><i class="fa fa-chevron-up"></i></button>
 </back-to-top>
+    </client-only>
 </div>
 </template>
-
 <script>
 import Header from '~/components/Header'
 import Footer from '~/components/Footer'
-
 export default {
   components: {
     Header,

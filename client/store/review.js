@@ -3,6 +3,7 @@ import swal from 'sweetalert2'
 export const state = () => ({
   reviews: [],
   allreviews: [],
+  latest: [],
   review: {}
 })
 export const getters = {
@@ -11,6 +12,9 @@ export const getters = {
   },
   allReviews: (state) => {
     return state.allreviews
+  },
+  latest: (state) => {
+    return state.latest
   },
   review: (state) => {
     return state.review
@@ -25,6 +29,9 @@ export const mutations = {
   },
   setAllReviews (state, allreviews) {
     state.allreviews = allreviews
+  },
+  setLatest (state, latest) {
+    state.latest = latest
   },
   setReview (state, review) {
     state.review = review
@@ -74,6 +81,14 @@ export const actions = {
       .then((res) => {
         if (res.status === 200) {
           commit('setAllReviews', res.data)
+        }
+      })
+  },
+  async get_latest ({ commit }) {
+    await this.$axios.get(`/latestreviews`)
+      .then((res) => {
+        if (res.status === 200) {
+          commit('setLatest', res.data)
         }
       })
   },

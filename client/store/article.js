@@ -38,8 +38,9 @@ export const actions = {
         }
       })
   },
-  async getArticles ({ commit }) {
-    await this.$axios.get(`/articles`)
+  async getArticles ({ commit}, {limit=null }) {
+    let url = ((limit !== null) ? '/articles?limit='+limit : '/articles')
+    await this.$axios.get(url)
       .then((res) => {
         if (res.status === 200) {
           commit('setArticles', res.data)

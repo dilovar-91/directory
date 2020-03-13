@@ -15,23 +15,19 @@
   >
     <div v-if="companies.total>0">
     <ymap-marker
-      
       v-for="company in companies.data" :key="company.id"        
       :coords="[company.latitude, company.longitude]" 
-     
       marker-type="placemark"
       marker-id="123"
-      :hint-content="company.title"      
-      :balloon-template="balloonTemplate(company.id, company.title, company.pictures, company.adress)"                 
+      :hint-content="company.title"   
       :icon="{
             layout: 'default#image',
             imageHref: '/img/car-marker.png',
             imageSize: [78, 66],
             imageOffset: [-15, -35],               
         }"
-      
     > 
-    <Baloon title="company.title" ></Baloon>   
+    <Baloon :title="company.title" :slug="company.id" :img="company.pictures[0]" :adress="company.adress" slot="balloon" ></Baloon>   
     </ymap-marker> 
     </div>  
   </yandex-map>
@@ -78,7 +74,7 @@
                     <div class="card-img-overlay-bottom z-index-20">
                       <div class="media text-white text-sm align-items-center">
                         <img :src="'/img/icon/'+(company.category['icon'] ||  'ico-car.png')" class="avatar avatar-border-white mr-2">
-                       <router-link :to="'/category/'+company.category['id']"> <div class="media-body text-white">{{company.category['name'] || ''}}</div></router-link>
+                       <router-link :to="'/category/'+company.category['slug']"> <div class="media-body text-white">{{company.category['name'] || ''}}</div></router-link>
                       </div>
                     </div>
                     
@@ -86,13 +82,14 @@
                   <div class="card-body d-flex align-items-center">
                     <div class="w-100">
                       <h6 class="card-title"><router-link :to="'/company/'+company.id"  class="text-decoration-none text-dark">{{company.title}}</router-link></h6>
-                      <div class="d-flex card-subtitle mb-3">
-                        <p class="flex-grow-1 mb-0 text-muted text-sm">Оценка салона: {{company.avg_rating || 0}}</p>
-                        <p class="flex-shrink-1 mb-0 card-stars text-xs text-right"><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i>
+                     <div class="d-flex card-subtitle mb-3">
+                        <p class="flex-grow-1 mb-0 text-muted text-sm">Оценка салона: </p>
+                        <p class="flex-shrink-1 mb-0 card-stars text-xs text-right mt-0">
+                          <star-rating :rating="company.avg_rating" :star-size="20" :read-only="true" :show-rating="false" active-color="#007bff" border-color="#007bff" ></star-rating> 
                         </p>
                       </div>
-                      <p class="card-text text-muted">Город: {{company.city['name'] || ''}}</p>
-                      <router-link :to="'/company/'+company.id" class="btn btn-outline-primary font-weight-bold router-link-active">               
+                      <p class="card-text text-muted">Город: <router-link :to="'/city/'+company.city['slug']" >{{company.city['name'] || ''}}</router-link></p>
+                      <router-link :to="'/company/'+company.slug" class="btn btn-outline-primary font-weight-bold router-link-active">               
                         Перейти отзывам
                       </router-link>
                     </div>

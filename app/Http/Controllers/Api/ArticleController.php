@@ -19,9 +19,10 @@ class ArticleController extends Controller
         else return response()->json([], 200);
     }
 
-    public function getArticles()
+    public function getArticles(Request $request)
     {
-        $articles = Article::orderBy('id', 'desc')->where('published', 1)->paginate(6);            
+        $limit =$request->input('limit') ?? 6;  
+        $articles = Article::orderBy('id', 'desc')->where('published', 1)->paginate($limit);            
         return response()->json($articles, 200);
     }
 }

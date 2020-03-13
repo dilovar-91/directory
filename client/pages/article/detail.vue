@@ -26,7 +26,6 @@ import { mapGetters } from 'vuex'
 export default {
 layout: "main", 
   components: {
-   
   }, 
   head () {
     return { title: this.article.title,

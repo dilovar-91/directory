@@ -24,6 +24,10 @@ class Company extends Model
     {        
         return $query->where('title', 'LIKE', '%' . $keyword . '%')->orWhere('description', 'LIKE', '%' . $keyword . '%');        
     }
+    public function scopeRelated($query,$title)
+    {        
+        return $query->where('companies.title', 'LIKE', '%%' . $title . '%%')->orWhere('companies.description', 'LIKE', '%%' . $title . '%%');        
+    }
 
     public function scopeCategory($query,$category)
     {

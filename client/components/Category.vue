@@ -7,6 +7,7 @@
               <div class="d-flex align-items-center h-100 text-nuxt-link justify-content-center py-6 py-lg-7">
                 <h3 class="text-shadow text-uppercase mb-0 text-center">{{category.name}}</h3>
               </div>
+              
             </div>
           </div>
 </div> 

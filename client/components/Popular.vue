@@ -30,8 +30,9 @@
                     <div class="w-100">
                       <h6 class="card-title"><router-link :to="'/company/'+company.id"  class="text-decoration-none text-dark">{{company.title}}</router-link></h6>
                       <div class="d-flex card-subtitle mb-3">
-                        <p class="flex-grow-1 mb-0 text-muted text-sm">Оценка салона: {{company.ratings_average || 0}}</p>
-                        <p class="flex-shrink-1 mb-0 card-stars text-xs text-right"><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i><i class="fa fa-star text-warning"></i>
+                        <p class="flex-grow-1 mb-0 text-muted text-sm">Оценка салона: </p>
+                        <p class="flex-shrink-1 mb-0 card-stars text-xs text-right mt-0">
+                         <star-rating :rating="company.avg_rating || 0" :star-size="20" :read-only="true" :show-rating="false" active-color="#007bff" border-color="#007bff" ></star-rating>  
                         </p>
                       </div>
                       <p class="card-text text-muted">Город: {{company.city['name'] || ''}}</p>

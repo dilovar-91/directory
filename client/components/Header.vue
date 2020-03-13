@@ -3,7 +3,7 @@
       <nav class="navbar navbar-expand-lg fixed-top shadow navbar-light bg-white py-3">
         <div class="container-fluid">
           <div class="d-flex align-items-center">
-           <router-link :to="{ name: 'main' }" class="navbar-brand py-1" >               
+           <router-link :to="{ name: 'home' }" class="navbar-brand py-1" >               
                <img src="/img/logo.svg" alt="logo" >
               </router-link>          
             <form action="/search" id="search" class="form-inline d-none d-sm-flex ">
@@ -26,7 +26,7 @@
             </form>
             <ul class="navbar-nav ml-auto">
               <li class="nav-item">
-              <router-link :to="{ name: 'main' }" class="nav-link" active-class="active">               
+              <router-link :to="{ name: 'home' }" class="nav-link" active-class="active">               
                 {{ $t('home') }}
               </router-link>
               </li>

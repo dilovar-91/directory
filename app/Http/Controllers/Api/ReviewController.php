@@ -63,4 +63,14 @@ class ReviewController extends Controller
         $Review->save();
         return response()->json($Review, 200);
     }
+
+    public function getLatestReviews()
+    {
+       $results = Review::where('published', '=', '1')
+    ->with('company')
+    ->where('rating', '>', '4')
+    ->orderBy('created_at', 'DESC')   
+	->paginate(5);
+        return response()->json($results, 200);
+    }
 }

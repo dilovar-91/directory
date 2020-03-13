@@ -64,6 +64,8 @@ module.exports = {
     { src: '~plugins/vue-select.js', mode: 'client' },
     { src: '~plugins/vue-star-rating', mode: 'client' },
     { src: '~plugins/backtotop', mode: 'client' },
+    { src: '~/plugins/mixinCommonMethods' },
+    { src: '~plugins/vue-gallery.js', mode: 'client' },
   ],
   modules: [
     '@nuxtjs/axios',

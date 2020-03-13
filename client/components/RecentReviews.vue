@@ -8,15 +8,18 @@
         <!-- Slider main container-->
         <div v-swiper:mySwiper="swiperOption" class="swiper-container testimonials-slider testimonials swiper-container-horizontal">
           <!-- Additional required wrapper-->
-          <div class="swiper-wrapper pt-2 pb-5" style="transform: translate3d(-4520px, 0px, 0px); transition-duration: 0ms;"><div class="swiper-slide px-3 swiper-slide-duplicate" data-swiper-slide-index="4" style="width: 545px; margin-right: 20px;">
+          <div class="swiper-wrapper pt-2 pb-5" style="transform: translate3d(-4520px, 0px, 0px); transition-duration: 0ms;" >
+            <div class="swiper-slide px-3 swiper-slide-duplicate" data-swiper-slide-index="index" style="width: 545px; margin-right: 20px;" v-for="review in reviews.data" :key="review.id">
               <div class="testimonial card rounded-lg shadow border-0">
                 <div class="testimonial-avatar"><img src="https://d19m59y37dris4.cloudfront.net/directory/1-4/img/avatar/avatar-3.jpg" alt="..." class="img-fluid"></div>
                 <div class="text">
                   <div class="testimonial-quote"><i class="fas fa-quote-right"></i></div>
-                  <p class="testimonial-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever</p><strong>Jessica Watson</strong>
+                  <p class="testimonial-text">{{truncate(review.text || '', 180)}}</p><strong>{{review.author}}</strong>
                 </div>
               </div>
-            </div><div class="swiper-slide px-3 swiper-slide-duplicate swiper-slide-duplicate-prev" data-swiper-slide-index="5" style="width: 545px; margin-right: 20px;">
+
+            </div>
+            <div class="swiper-slide px-3 swiper-slide-duplicate swiper-slide-duplicate-prev" data-swiper-slide-index="5" style="width: 545px; margin-right: 20px;">
               <div class="testimonial card rounded-lg shadow border-0">
                 <div class="testimonial-avatar"><img src="https://d19m59y37dris4.cloudfront.net/directory/1-4/img/avatar/avatar-3.jpg" alt="..." class="img-fluid"></div>
                 <div class="text">
@@ -103,6 +106,8 @@
     </section>
 </template>
 <script>
+  
+  import { mapGetters } from 'vuex'
   export default {
     data () {
       return {        
@@ -134,6 +139,14 @@
         }
       }
     },
+
+    beforeCreate() {      
+      this.$store.dispatch('review/get_latest')
+    },
+
+    computed: mapGetters({      
+    reviews: 'review/latest',    
+  }),
     
   }
 </script>

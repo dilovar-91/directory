@@ -7,8 +7,7 @@ Vue.use(Router)
 const page = path => () => import(`~/pages/${path}`).then(m => m.default || m)
 
 const routes = [
-  { path: '/', name: 'welcome', component: page('main.vue') },
-
+  { path: '/', name: 'home', component: page('home.vue') },
   { path: '/login', name: 'login', component: page('auth/login.vue') },
   { path: '/register', name: 'register', component: page('auth/register.vue') },
   { path: '/password/reset', name: 'password.request', component: page('auth/password/email.vue') },
@@ -16,15 +15,13 @@ const routes = [
   { path: '/email/verify/:id', name: 'verification.verify', component: page('auth/verification/verify.vue') },
   { path: '/email/resend', name: 'verification.resend', component: page('auth/verification/resend.vue') },
 
-  { path: '/home', name: 'home', component: page('main.vue') },
-  { path: '/main', name: 'main', component: page('main.vue') },  
   { path: '/company/:id', name: 'company-detail', component: page('company/detail.vue') },
   { path: '/city/:slug?/:page(\\d+)?/:sort?', name: 'city-detail', component: page('cities/detail.vue') },
+  { path: '/cities', name: 'cities', component: page('cities/index.vue') },
   { path: '/articles', name: 'articles', component: page('article/index.vue') },
   { path: '/article/:slug/', name: 'article-slug', component: page('article/detail.vue') },
-  { path: '/companies', name: 'companies', component: page('main.vue') },
+  { path: '/companies/:page(\\d+)?/', name: 'companies', component: page('company/companies.vue') },
   { path: '/contact', name: 'contact', component: page('contact.vue') },
-  { path: '/cities', name: 'cities', component: page('main.vue') },
   { path: '/categories', name: 'categories', component: page('categories/index.vue'), props: route => ({ page: (route.query.page || 1) }) },
   { path: '/category/:slug?/:page(\\d+)?/:sort?', name: 'category-slug', component: page('categories/category.vue') },
   { path: '/search/:page?/', name: 'search-page', component: page('search/index.vue'), props: (route) => ({ keyword: route.query.keyword }) },

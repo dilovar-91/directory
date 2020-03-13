@@ -16,6 +16,7 @@ Route::get('/companies/category/{slug}', 'Api\CompanyController@getCompaniesByCa
 Route::get('/companies/city/{slug}', 'Api\CompanyController@getCompaniesByCitySlug');
 Route::get('/coords', 'Api\CompanyController@getAllCoords');
 Route::get('/search', 'Api\CompanyController@searchCompanies');
+Route::get('/related', 'Api\CompanyController@getRelatedCompanies');
 Route::get('/company/{id}', 'Api\CompanyController@getCompany');
 Route::get('/reviews/{id}', 'Api\ReviewController@getReviews');
 Route::get('/allreviews', 'Api\ReviewController@getAllReviews');
@@ -26,6 +27,7 @@ Route::get('/img/{image}', 'Api\CompanyController@getImage');
 Route::post('/rating/new', 'Api\ReviewController@setrating');
 Route::post('/review/like', 'Api\ReviewController@setLike');
 Route::post('/review/setreview', 'Api\ReviewController@setrating');
+Route::get('/latestreviews', 'Api\ReviewController@getLatestReviews');
 
 Route::get('/cities', 'Api\CompanyController@cities')->name('api.cities');
 Route::get('/cities/{id}', 'Api\CompanyController@getCompaniesByCity')->name('api.companybycity');

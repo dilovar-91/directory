@@ -1,8 +1,10 @@
 <template>
 <div>
-        <h4 class="warning-text" @click="goToCompany(slug)">{{title}}</h4>
-        <img src="/img/companies/`+ img[0] +`" width="350px">
-      </div>
+<router-link :to="'/company/'+slug">
+        <h4 class="warning-text" v-text="title + ', ' + adress"></h4>
+        <img :src="'/img/companies/'+ img" width="350px">
+</router-link>
+</div>
 </template>
 <script>
 export default {
@@ -21,16 +23,12 @@ export default {
       required: true,
       default: null
     },
-    
+    adress: {
+      type: String,
+      required: true,
+      default: null
+    },
   },
-  methods: {
-      goToCompany: function (slug = 'empty') {   
-          //window.open("/company/" + id, "_blank");    
-          this.$router.push("/company/"+slug)
-      },
-              
-  }
-  
 }
 </script>
 

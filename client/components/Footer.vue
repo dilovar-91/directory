@@ -19,7 +19,7 @@
               <ul class="list-unstyled">
                 <li><router-link to="/contact" class="text-muted">{{$t('contact')}}                                   </router-link></li>
                 <li><router-link to="/companies" class="text-muted">{{$t('companies-on-map')}}                                   </router-link></li>
-                <li><router-link to="/rules" class="text-muted">{{$t('rules')}}                                   </router-link></li>
+                <li><router-link to="/articles" class="text-muted">{{$t('articles')}}                                   </router-link></li>
                 <li><router-link to="/privacy" class="text-muted">{{$t('privacy')}}                                   </router-link></li>
                
               </ul>

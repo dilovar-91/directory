@@ -12,15 +12,14 @@
           </div>
         </div>
         <div class="swiper-pagination swiper-pagination-red text-red"></div>
-        <!--<div class="swiper-button-prev swiper-button-white"></div>
-        <div class="swiper-button-next swiper-button-white"></div>-->
       </div>
     </section>
     <div class="container py-4">
       <div class="row">
         <div class="col-lg-7"> 
           <div class="text-block">
-            <p class="text-primary"><i class="fa-map-marker-alt fa mr-1"></i> {{company.city['name'] || ''}}, <span v-if="company.metro !== null">{{company.metro['name'] + ',' || '' }}</span>  {{company.adress || '' }}</p>
+            <BreadCrumb :title="company.title" parent="Все организации" parent_url="companies" />
+            <p class="text-primary mt-3"><i class="fa-map-marker-alt fa mr-1"></i> {{company.city['name'] || ''}}, <span v-if="company.metro !== null">{{company.metro['name'] + ',' || '' }}</span>  {{company.adress || '' }}</p>
             <h1>{{company.title}}</h1>
             <div class="badge badge-pill p-2 badge-secondary-light">{{company.category['name'] || ''}}</div>
             <h6 class="mb-3 mt-2 ">{{$t('description')}}</h6>
@@ -33,15 +32,13 @@
                 <ul class="list-unstyled text-muted">
                   <li class="mb-2"><i class="fa fa-phone text-secondary w-1rem mr-3 text-center"></i> <span class="text-sm">{{$t('phone')}}:{{company.tell}}</span></li>
                   <li class="mb-2"><i class="fa fa-tv text-secondary w-1rem mr-3 text-center"></i> <span class="text-sm">{{$t('website')}} :<a :href="company.website" target="_blank"> {{ company.website}}</a></span></li>
-                
                 </ul>
               </div>
               <div class="col-md-6">
                 <ul class="list-unstyled text-muted">
                   <li class="mb-2"><i class="fa fa-envelope text-secondary w-1rem mr-3 text-center"></i><span class="text-sm">{{$t('email')}} :<a :href="'mailto:'+company.email" target="_blank"> {{ company.email}}</a></span></li>
                   <li class="mb-2"><i class="fa fa-briefcase text-secondary w-1rem mr-3 text-center"></i><span class="text-sm">{{$t('job-schedule')}}: {{company.job_schedule}}</span></li>
-                  
-                </ul>
+               </ul>
               </div>
             </div>
           </div>
@@ -95,6 +92,7 @@
             </div>
             <AddReview :company_id="company.id"></AddReview>
           </div>
+         
         </div>
         <div class="col-lg-5">
           <div style="top: 100px;" class=" shadow ml-lg-4 rounded sticky-top">    
@@ -156,19 +154,26 @@
               </div>   
           </div>
         </div>
+        
       </div>
+       
     </div>
+    <Similar :title="company.title"></Similar>
 </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
 import AddReview from '~/components/AddReview'
 import HeartButton from '~/components/HeartButton'
+import Similar from '~/components/Similar'
+import BreadCrumb from '~/components/BreadCrumb'
 export default {
 layout: "main", 
   components: {
    AddReview,
    HeartButton,
+   Similar,
+   BreadCrumb,
   }, 
 
   head () {

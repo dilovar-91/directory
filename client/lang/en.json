@@ -74,7 +74,7 @@
   "company-in-map": "Company in map",  
   "phone": "Phone",  
   "website": "Website",    
-  "job-schedule": "Job shedule",  
+  "job_schedule": "Job shedule",  
   "review": "Review",  
   "write-review": "Write review",  
   "go-to-site": "Go to Website",  

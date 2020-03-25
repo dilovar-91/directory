@@ -67,6 +67,7 @@
 import Form from 'vform'
 
 export default {
+  layout: 'default',
   head () {
     return { title: this.$t('register') }
   },

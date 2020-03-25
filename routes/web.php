@@ -28,8 +28,10 @@ Route::post('/rating/new', 'Api\ReviewController@setrating');
 Route::post('/review/like', 'Api\ReviewController@setLike');
 Route::post('/review/setreview', 'Api\ReviewController@setrating');
 Route::get('/latestreviews', 'Api\ReviewController@getLatestReviews');
+Route::get('/listing/{id}', 'Api\ListingController@getCompany');
 
 Route::get('/cities', 'Api\CompanyController@cities')->name('api.cities');
+Route::get('/allcities', 'Api\CompanyController@getCities')->name('allcities');
 Route::get('/cities/{id}', 'Api\CompanyController@getCompaniesByCity')->name('api.companybycity');
 
 Route::get('/city/{slug}', 'Api\CompanyController@getCity')->name('api.city');

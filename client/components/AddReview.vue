@@ -2,7 +2,6 @@
 <div class="py-5">
               <button type="button" data-toggle="collapse" data-target="#leaveReview" aria-expanded="false" aria-controls="leaveReview" class="btn btn-outline-primary">{{$t('write-review')}}</button>
               <div id="leaveReview" class="collapse mt-4">
-               
                 <form id="contact-form" @submit.prevent="setRating" method="POST" class="form">
                   <div class="form-group">
                     <label for="name" class="form-label">Заголовок *</label>
@@ -18,16 +17,13 @@
                       <div class="form-group">
                         <label for="rating" class="form-label">Оценка *</label>
                         <select name="rating" id="rating" v-model="review.rating" class="custom-select focus-shadow-0">
-                          <option disabled value="">Выберите один из вариантов</option>
+                          <option disabled value="" selected="selected">Выберите один из вариантов</option>
                           <option value="5" >&#9733;&#9733;&#9733;&#9733;&#9733; (5/5)</option>
                           <option value="4">&#9733;&#9733;&#9733;&#9733;&#9734; (4/5)</option>
                           <option value="3">&#9733;&#9733;&#9733;&#9734;&#9734; (3/5)</option>
                           <option value="2">&#9733;&#9733;&#9734;&#9734;&#9734; (2/5)</option>
                           <option value="1">&#9733;&#9734;&#9734;&#9734;&#9734; (1/5)</option>
                         </select>
-                        <client-only>
-                                                <star-rating v-model="rating" :increment="0.5" v-bind:star-size="35"  text-class="custom-text"></star-rating>
-                                                  </client-only>
                       </div>
                     </div>
                   </div>

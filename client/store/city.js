@@ -7,6 +7,9 @@ export const getters = {
   cities: (state) => {
     return state.cities
   },
+  allcities: (state) => {
+    return state.allcities
+  },
   city: (state) => {
     return state.city
   },
@@ -21,6 +24,9 @@ export const getters = {
 export const mutations = {
   setcities (state, cities) {
     state.cities = cities
+  },
+  setallcities (state, allcities) {
+    state.allcities = allcities
   },
   setcity (state, city) {
     state.city = city
@@ -46,7 +52,16 @@ export const actions = {
     await this.$axios.get(`/cities`)
       .then((res) => {
         if (res.status === 200) {
-          commit('setcities', res.data)
+          commit('setcities', res.data.data)
+        }
+      })
+  },
+  async getallcities ({ commit }, {page}) {
+    await this.$axios.get(`/allcities?page=${page}`)
+      .then((res) => {
+        if (res.status === 200) {
+          commit('setallcities', res.data)
+          
         }
       })
   },

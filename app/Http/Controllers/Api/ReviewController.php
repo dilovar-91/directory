@@ -69,8 +69,8 @@ class ReviewController extends Controller
        $results = Review::where('published', '=', '1')
     ->with('company')
     ->where('rating', '>', '4')
-    ->orderBy('created_at', 'DESC')   
-	->paginate(5);
+    ->orderBy('created_at', 'DESC') 
+	->paginate(7);
         return response()->json($results, 200);
     }
 }

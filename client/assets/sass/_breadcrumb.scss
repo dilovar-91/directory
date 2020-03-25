@@ -1,0 +1,102 @@
+$color-link: #007bff;
+$color-separator: #767676;
+$size-icon: 16px;
+$space-separator: 8px;
+
+@mixin text-underline($color: currentColor) {
+  background-image: linear-gradient($color, $color);
+  background-size: auto 1px;
+  background-repeat: repeat-x;
+  background-position: 0 calc(50% + 1ex);
+}
+
+@function icon-svg-uri($icon-name, $color) {
+  @if (type_of($color) == 'color') and (str-index(inspect($color), '#') == 1)  {
+    $encoded-color: '%23' + str-slice(inspect($color), 2);
+
+    // MS Edge is turning single quotes to double quotes. (`url('data:` -> `url("data:`)
+    $icon-set: (
+      arrow-left: "%3Cline x1='19' y1='12' x2='5' y2='12'%3E%3C/line%3E%3Cpolyline points='12 19 5 12 12 5'%3E%3C/polyline%3E",
+      chevron-right: "%3Cpolyline points='9 18 15 12 9 6'%3E%3C/polyline%3E"
+    );
+
+    @if map-has-key($icon-set, $icon-name) {
+      @return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='#{$encoded-color}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round%5C'%3E#{map-get($icon-set, $icon-name)}%3C/svg%3E";
+    } @else {
+      @error 'Invalid icon name: `#{$icon-name}`'
+    }
+  }@else {
+    @error 'Invalid HEX value: `#{$color}`'
+  }
+}
+ol {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.o-inline-svg-icon {
+  stroke: currentColor;
+
+  &--baseline {
+    position: relative;
+    top: .125em;
+    width: 1em;
+    height: 1em;
+  }
+}
+.c-navigation-breadcrumbs {
+  &__directory {
+    display: flex;
+  }
+
+  &__link:link {
+    color: $color-link !important;
+    text-decoration: none;
+    &:hover {
+      @include text-underline();
+    }
+  }
+  @media (max-width: 300px) {
+    &__item {
+      &:not(:nth-last-child(2)) {
+        display: none;
+      }
+    }
+
+    &__link {
+      &:before {
+        display: inline-block;
+        content: '\200b';
+        background: url(icon-svg-uri('arrow-left', $color-link)) center / $size-icon $size-icon no-repeat;
+        width: $size-icon;
+      }
+    }
+  }
+
+  @media (min-width: 301px) {
+    &__item {
+      &:nth-last-child(n+2):after {
+        display: inline-block;
+        content: '\200b';
+        background: url(icon-svg-uri('chevron-right', $color-separator)) center / $size-icon $size-icon no-repeat;
+        width: $size-icon;
+        margin: 0 $space-separator;
+      }
+    }
+
+    &__link {
+      display: block;
+      float: left;
+    }
+  }
+}
+
+.u-visually-hidden {
+  position: absolute;
+  left:     -10000px;
+  top:      auto;
+  width:    1px;
+  height:   1px;
+  overflow: hidden;
+}

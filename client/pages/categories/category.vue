@@ -1,9 +1,10 @@
 <template>
 <div class="bg-white">
-  <div class="container-fluid pt-5 pb-3 border-bottom px-lg-5">
+  <div class="container-fluid pt-4 pb-3 border-bottom px-lg-5">
       <div class="row">
         <div class="col-xl-8">
-          <h1>Список организации по категории <span class="primary">{{ category.name || ''}}</span></h1>
+         <BreadCrumb :title="category.name" parent="Категории" parent_url="categories" />
+          <h1>Список организации п о категории <span class="primary">{{ category.name || ''}}</span></h1>
           <p class="lead text-muted">{{category.description}}</p>
           <p class="ml-2 lead text-danger font-weight-bold" v-if="companies.total <= 0" >Организации по категории "{{ category.name || ''}}" не существуют.</p>
         </div>
@@ -28,20 +29,18 @@
           <!-- place item-->
           <transition-group :duration="{  enter: 2000 }" appear name="list" tag="div" class="row">
           <div data-marker-id="59c0c8e33b1527bfe2abaf92" class="col-sm-6 col-lg-3 mb-5" v-for="company in companies.data" :key="company.id">
-                
-                <div class="card h-100 border-0 shadow">
+               <div class="card h-100 border-0 shadow">
                   <div class="card-img-top overflow-hidden gradient-overlay"> <router-link :to="'/company/'+company.id" ><img :src="'/img/companies/'+company.pictures[0]" :alt="company.title" class="img-fluid" style="height: 185px;"></router-link>
                     <div class="card-img-overlay-bottom z-index-20">
                       <div class="media text-white text-sm align-items-center">
                         <img :src="'/img/icon/'+(company.category['icon'] ||  'ico-car.png')" class="avatar avatar-border-white mr-2">
-                       <router-link :to="'/category/'+company.category['slug']"> <div class="media-body text-white">{{company.category['name'] || ''}}</div></router-link>
+                       <router-link :to="'/listing/'+company.category['slug']"> <div class="media-body text-white">{{company.category['name'] || ''}}</div></router-link>
                       </div>
                     </div>
-                    
                   </div>
                   <div class="card-body d-flex align-items-center">
                     <div class="w-100">
-                      <h6 class="card-title"><router-link :to="'/company/'+company.id"  class="text-decoration-none text-dark">{{company.title}}</router-link></h6>
+                      <h6 class="card-title"><router-link :to="'/listing/'+company.id"  class="text-decoration-none text-dark">{{company.title}}</router-link></h6>
                       <div class="d-flex card-subtitle mb-3">
                         <p class="flex-grow-1 mb-0 text-muted text-sm">Оценка салона: </p>
                         <p class="flex-shrink-1 mb-0 card-stars text-xs text-right mt-0">
@@ -49,7 +48,7 @@
                         </p>
                       </div>
                       <p class="card-text text-muted">Город: {{company.city['name'] || ''}}</p>
-                      <router-link :to="'/company/'+company.id" class="btn btn-outline-primary font-weight-bold router-link-active">               
+                      <router-link :to="'/listing/'+company.id" class="btn btn-outline-primary font-weight-bold router-link-active">               
                         Перейти отзывам
                       </router-link>
                     </div>
@@ -70,12 +69,14 @@ import { mapGetters } from 'vuex'
 import AddReview from '~/components/AddReview'
 import HeartButton from '~/components/HeartButton'
 import ListPagination from '~/components/ListPagination'
+import BreadCrumb from '~/components/BreadCrumb'
 export default {
 layout: "main", 
   components: {
    AddReview,
    HeartButton,
    ListPagination,
+   BreadCrumb,
   }, 
   head () {
     return { title: 'Компании находящийся в городе ',
@@ -144,4 +145,6 @@ layout: "main",
   opacity: 0;
   transform: translateY(30px);
 }
+
+
 </style>

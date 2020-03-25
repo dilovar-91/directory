@@ -1,8 +1,9 @@
 <template>
 <div>
     <section class="hero-home dark-overlay mb-5"><img src="/img/article-background.jpg" alt="" class="bg-image">
-      <div class="container py-7">
+      <div class="container py-4">
         <div class="overlay-content text-center text-white">
+          <BreadCrumb :title="article.title" parent="Все статьи" parent_url="articles" />
           <h1 class="display-3 text-serif font-weight-bold text-shadow mb-0">{{article.title}}</h1>
         </div>
       </div>
@@ -23,9 +24,11 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import BreadCrumb from '~/components/BreadCrumb'
 export default {
 layout: "main", 
   components: {
+    BreadCrumb,
   }, 
   head () {
     return { title: this.article.title,
@@ -53,5 +56,3 @@ layout: "main",
   },
 }
 </script>
-<style scoped>
-</style>

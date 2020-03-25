@@ -16,14 +16,14 @@ module.exports = {
 
   head: {
     title: process.env.APP_NAME,
-    titleTemplate: '%s - ' + process.env.APP_NAME,
+    titleTemplate: process.env.APP_NAME+' | %s' ,
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' }, 
-      { hid: 'description', name: 'description', content: 'Nuxt.js project' }
+      { hid: 'description', name: 'description', content: 'Бизнест директория' }
     ],
     bodyAttrs: {
-      style: 'padding-top: 72px;'
+      //style: 'padding-top: 72px;'
     },
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/img/favicon.png' },
@@ -66,6 +66,7 @@ module.exports = {
     { src: '~plugins/backtotop', mode: 'client' },
     { src: '~/plugins/mixinCommonMethods' },
     { src: '~plugins/vue-gallery.js', mode: 'client' },
+    { src: '~plugins/infinite-loading.js', mode: 'client' },
   ],
   modules: [
     '@nuxtjs/axios',

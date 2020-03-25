@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\City;
 use App\Models\Metro;
 use App\Models\Review;
+use App\Models\Region;
 use App\Http\Resources\Company as CompanyResource;
 use Illuminate\Support\Facades\DB;
 
@@ -59,16 +60,10 @@ class CompanyController extends Controller
     public function getRelatedCompanies(Request $request)
     {
        $title = $request->get('title');
-       $results = Company::where('active', '=', '1')->related($title)
-	->with('city', 'metro', 'category')
-	->leftJoin('reviews', 'reviews.company_id', '=', 'companies.id')
-	->select(array('companies.*',
-        DB::raw('CAST(AVG(rating) as UNSIGNED ) as avg_rating'),
-        DB::raw('COUNT(reviews.id) AS review_count')
-        ))
-	->groupBy('companies.id')
-    ->orderBy('avg_rating', 'DESC')
-	->paginate(6);
+       $results = Company::where('active', '=', '1')
+       ->whereRaw("MATCH(title, description)AGAINST('$title' IN BOOLEAN MODE)")
+       ->with('category', 'city', 'metro')
+	    ->paginate(8);
         return response()->json($results, 200);
     
     }
@@ -96,7 +91,7 @@ class CompanyController extends Controller
         ->leftJoin('reviews', 'reviews.company_id', '=', 'companies.id')
         ->select(array('companies.*',
             DB::raw('CAST(AVG(rating) as UNSIGNED) as avg_rating')
-            , DB::raw('COUNT(*) AS review_count')))             
+            ,DB::raw('COUNT(rating) AS review_count')))             
         ->groupBy('companies.id')
         ->findOrFail($id);         
         return response()->json($item, 200);
@@ -138,7 +133,7 @@ class CompanyController extends Controller
     public function cities(Request $request)
     {
         $q = $request->get('q');
-        return response()->json(City::where('name', 'like', "%$q%")->orderBy('order', 'asc')->get(), 200);
+        return response()->json(City::where('name', 'like', "%$q%")->orderBy('order', 'asc')->paginate(20), 200);
         //return City::where('name', 'like', "%$q%")->orderBy('order', 'asc')->paginate(20, ['id', 'name', 'pic', 'description', 'latitude', 'longitude']);
     }
     public function getCity($slug)
@@ -231,6 +226,14 @@ class CompanyController extends Controller
     ->orderBy(...$order)     
     ->paginate(12);   
     return $companies;     
-    }    
+    }
+    
+    
+
+    public function getCities()
+    {
+       $results = City::with('region')->withCount('companies')->paginate(150);
+        return response()->json($results, 200);
+    }
     
 }

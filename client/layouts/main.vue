@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="padding-top: 72px;">
     <Header />    
     <nuxt />
     <Footer />

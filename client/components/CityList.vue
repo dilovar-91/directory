@@ -1,4 +1,5 @@
 <template> 
+
   <div v-swiper:mySwiper="swiperOption" class="guides-slider" >
     <div class="swiper-wrapper pb-5">
       <div class="swiper-slide h-auto px-2" v-for="city in cities" :key="city.id">
@@ -11,6 +12,7 @@
     </div>
     <div class="swiper-pagination swipe r-pagination-bullets"></div>
   </div>
+  
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -48,12 +50,11 @@ import { mapGetters } from 'vuex'
     },
 
     beforeCreate() {
-      this.$store.dispatch('company/get_cities')
+      this.$store.dispatch('city/getcities')
       this.$store.dispatch('company/getTopCompanies')
     },
-
     computed: mapGetters({    
-    cities: 'company/cities',    
+    cities: 'city/cities',    
     TopCompanies: 'company/topCompanies',    
   })
     

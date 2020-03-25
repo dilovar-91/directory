@@ -1,6 +1,5 @@
 <template>
 <div class="bg-white">
- 
  <section>
       <div class="map-wrapper-450">
         <div id="categoryMap" class="h-100">
@@ -13,6 +12,13 @@
     style="height: 500px; display:block;"
     class="h-100"    
   >
+  <ymap-marker
+      :coords="[city.latitude, city.longitude]" 
+      marker-type="circle"
+      marker-id="123"
+      :hint-content="city.name"   
+      :circle-radius="city.slug=='moscow' ? 20000 :10000"
+    > </ymap-marker> 
     <div v-if="companies.total>0">
     <ymap-marker
       v-for="company in companies.data" :key="company.id"        
@@ -36,8 +42,9 @@
         </div>
       </div>
     </section>
-  <section class="py-5 bg-gray-100 shadow">
+  <section class="py-4 shadow">
       <div class="container">
+        <BreadCrumb :title="city.name" parent="Все города" parent_url="cities" />
         <h1 class="mb-4">{{ city.name || ''}}</h1>
         <p class="lead mb-5">{{city.description}}</p>
         <p class="ml-2 lead text-danger font-weight-bold" v-if="companies.total <= 0" >Организации по категории "{{ category.name || ''}}" в городе {{ city.name || ''}} не существуют.</p>
@@ -111,6 +118,7 @@ import { mapGetters } from 'vuex'
 import AddReview from '~/components/AddReview'
 import HeartButton from '~/components/HeartButton'
 import ListPagination from '~/components/ListPagination'
+import BreadCrumb from '~/components/BreadCrumb'
 import Baloon from '~/components/Baloon'
 export default {
 layout: "main", 
@@ -118,6 +126,7 @@ layout: "main",
    AddReview,
    HeartButton,
    ListPagination,
+   BreadCrumb,
    Baloon
   }, 
   head () {

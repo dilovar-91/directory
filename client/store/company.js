@@ -3,7 +3,9 @@ export const state = () => ({
   companiesByCity: [],
   companiesByCategory: [],
   companiesByKeyword: [],
+  companiesRelated: [],
   company: {},
+  listing: {},
   searchResult: [],
   topCompanies: [],
   coords: [],
@@ -17,6 +19,9 @@ export const getters = {
   },
   item: (state) => {
     return state.company
+  },
+  listing: (state) => {
+    return state.listing
   },
   foundedCompany: (state) => {
     return state.searchResult
@@ -32,6 +37,9 @@ export const getters = {
   },
   companiesByKeyword: (state) => {
     return state.companiesByKeyword
+  },
+  companiesRelated: (state) => {
+    return state.companiesRelated
   },
   coords: (state) => {
     return state.coords
@@ -74,8 +82,14 @@ export const mutations = {
   setCompaniesByKeyword (state, companiesByKeyword) {
     state.companiesByKeyword = companiesByKeyword
   },
+  setCompaniesRelated (state, companiesRelated) {
+    state.companiesRelated = companiesRelated
+  },
   setCompany (state, company) {
     state.company = company
+  },
+  setListing (state, listing) {
+    state.listing = listing
   },
   setSearchResult (state, searchResult) {
     state.searchResult = searchResult
@@ -129,6 +143,14 @@ export const actions = {
       .then((res) => {
         if (res.status === 200) {
           commit('setCompany', res.data)
+        }
+      })
+  },
+  async fetch_listing ({ commit }, { id }) {
+    await this.$axios.get(`/listing/${id}`)
+      .then((res) => {
+        if (res.status === 200) {
+          commit('setListing', res.data)
         }
       })
   },
@@ -193,6 +215,15 @@ export const actions = {
       .then((res) => {
         if (res.status === 200) {
           commit('setCompaniesByKeyword', res.data)
+        }
+      })
+  },
+
+  async getRelatedCompanies ({ commit }, { title }) {
+    await this.$axios.get(`/related?title=${title}`)
+      .then((res) => {
+        if (res.status === 200) {
+          commit('setCompaniesRelated', res.data)
         }
       })
   },

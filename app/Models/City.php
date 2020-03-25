@@ -3,11 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Company;
+use App\Models\Region;
 
 class City extends Model
 {
-    public function company()
+    
+    public function companies()
     {
-        return $this->belongsTo(Company::class);
+        return $this->hasMany(Company::class);
     }
+
+    public function region()
+    {
+        return $this->belongsTo(Region::class,);
+    } 
 }

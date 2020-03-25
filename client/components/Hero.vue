@@ -59,7 +59,7 @@ export default {
       },
     }, 
    computed: mapGetters({    
-    cities: 'company/cities',    
+    cities: 'city/cities',    
     categories: 'category/categories',    
   })
 }

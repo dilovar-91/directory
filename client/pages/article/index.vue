@@ -5,6 +5,7 @@
         <div class="row">
           <div class="col-lg-6">
             <div class="bg-white rounded-lg shadow p-5"><strong class="text-uppercase text-secondary d-inline-block mb-2 text-sm">В Тренде</strong>
+              
               <h1 class="mb-3 d-none">{{$t('articles')}}</h1>
               <h2 class="mb-3"><router-link :to="'/article/'+articles.data[articles.total-1].slug">{{articles.data[articles.total-1].title}}</router-link></h2>
               <div  v-html="truncate(articles.data[articles.total-1].content)"></div><router-link :to="'/article/'+articles.data[articles.total-1].slug" class="btn btn-link p-0">Читать дальше <i class="fa fa-long-arrow-alt-right"></i></router-link>
@@ -13,10 +14,10 @@
         </div>
       </div>
     </section>
-    <section class="py-6">
+    <section class="py-4">
       <div class="container">
         <div class="row mb-5">
-          <!-- blog item-->
+          <div class="col-md-12 mb-4"><BreadCrumb :title="$t('articles')" /></div>
           <div class="col-lg-4 col-sm-6 mb-4" v-for="article in articles.data" :key="article.id">
             <div class="card shadow border-0 h-100"><router-link :to="'/article/'+article.slug"><img :src="'/img/photo/'+article.pic" alt="..." class="img-fluid card-img-top"></router-link>
               <div class="card-body"><span class="text-uppercase text-muted text-sm letter-spacing-2">Советы, Статьи</span>
@@ -28,13 +29,6 @@
             </div>
           </div>
         </div>
-        <!-- Pagination 
-        <nav aria-label="Blog pagination">
-          <ul class="pagination justify-content-between mb-5">
-            <li class="page-item"><router-link :to="'/articles/'+articles.prev_page" class="page-link text-sm rounded"> <i class="fa fa-chevron-left mr-1"></i>Older posts</router-link></li>
-            <li class="page-item"><router-link :to="'/articles/'+articles.last_page" tabindex="-1" class="page-link text-sm rounded">Newer posts  <i class="fa fa-chevron-right ml-1">                            </i></router-link></li>
-          </ul>
-        </nav>-->
       </div>
     </section>  
 </div>
@@ -42,13 +36,15 @@
 <script>
 import { mapGetters } from 'vuex'
 import ListPagination from '~/components/ListPagination'
+import BreadCrumb from '~/components/BreadCrumb'
 export default {
 layout: "main", 
   components: {
    ListPagination,
+   BreadCrumb,
   }, 
   head () {
-    return { title: 'Страница статьи ',
+    return { title: 'Страница статьи',
     meta: [
         { hid: 'description', name: 'description', content: 'Статьи о нащего команда' }
     ],

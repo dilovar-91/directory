@@ -5,7 +5,8 @@
       <div class="container">
         <div class="row mb-5">
           <div class="col-md-8">
-            <p class="subtitle text-primary">{{$t('select-city')}}</p>            
+            <BreadCrumb title="Список всех организации" />
+            <p class="subtitle text-primary">Список всех организации</p>            
           </div>
           <div class="col-md-4 d-lg-flex align-items-center justify-content-end">
             <router-link :to="{ name: 'main' }" class="text-muted text-sm" >               
@@ -18,7 +19,6 @@
         </div>
       </div>
     </section>
-
     <Popular></Popular>
     <RecentReviews></RecentReviews>
     <section class="py-4 bg-gray-100"> 
@@ -88,7 +88,7 @@ export default {
       Hero
   },
   head () {
-    return { title: this.$t('home') }
+    return { title: 'Список всех организации' }
   },
 
   data: () => ({

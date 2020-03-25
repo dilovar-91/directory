@@ -1,7 +1,7 @@
 <template>
 <div class="py-5">
               <button type="button" data-toggle="collapse" data-target="#leaveReview" aria-expanded="false" aria-controls="leaveReview" class="btn btn-outline-primary">{{$t('write-review')}}</button>
-              <div id="leaveReview" class="collapse mt-4">
+              <div id="leaveReview"  class="collapse mt-4">
                 <form id="contact-form" @submit.prevent="setRating" method="POST" class="form">
                   <div class="form-group">
                     <label for="name" class="form-label">Заголовок *</label>

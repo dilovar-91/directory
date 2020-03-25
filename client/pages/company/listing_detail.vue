@@ -65,15 +65,16 @@
             </div>          
           <div class="text-block">            
             <h5 class="mb-4 subtitle text-sm text-primary" id="reviewform"  v-if="reviews.length>0">{{$t('reviews')}}</h5>
-            <h5 class="mb-4 subtitle text-sm text-primary" id="reviewform"  v-else>{{$t('write-first-review')}}</h5>
+            <h5 class="mb-4 subtitle text-sm text-primary" id="addReview"  v-else>{{$t('write-first-review')}}</h5>
             <div class="media d-block d-sm-flex review" v-for="review in reviews" :key="review.id">
-              <div class="text-md-center mr-4 mr-xl-4"><img src="/img/user-pic.png" alt="Padmé Amidala" class="d-block avatar avatar-xl p-2 mb-2"><span class="text-uppercase text-muted text-sm">{{ review.author }}</span></div>
+              <div class="text-md-center mr-3 mr-xl-3 col-3"><img src="/img/user-pic.png" :alt="review.author" class="d-block avatar avatar-xl p-2 mb-2"><span class="text-uppercase text-muted text-sm">{{ review.author }}</span></div>
               <div class="media-body">
                 <h4 class="mb-0 text">Заголовок: {{review.title || ''}} <span class="float-right" ><i class="fa fa-heart pulse" style="color:red;"  @click.prevent="setLike($event, review.id)" ></i> {{review.recomend_count }}</span></h4>
                 <p class="font-weight-bold mb-0">Дата: {{ $moment(review.created_at).utc().format('DD/MM/YYYY HH:mm')  }} </p>
                 <p class="text-success font-weight-bold mb-0">Преимущество: {{review.pros || ''}}</p>
-                <p class="text-danger font-weight-bold">Недостатки: {{review.cons || ''}}</p>               
-                <div class="mb-2"><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i>
+                <p class="text-danger font-weight-bold mb-0">Недостатки: {{review.cons || ''}}</p>               
+                <div class="mb-2">
+                  <star-rating :rating="review.rating" :star-size="20" :read-only="true" :show-rating="true" active-color="#007bff" border-color="#007bff" :glow="2" ></star-rating> 
                 </div>
                 <p class="text-muted text-sm" v-text="review.text"></p>
               </div>

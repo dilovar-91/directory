@@ -21,4 +21,9 @@ class ListingController extends Controller
         ->findOrFail($id);         
         return response()->json($item, 200);
     }
+    public function store(Request $request)
+    {
+        $listing = Listing::create($request->all());
+        return response()->json($listing, 201);
+    }
 }

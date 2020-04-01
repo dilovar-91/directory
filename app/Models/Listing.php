@@ -9,6 +9,10 @@ use App\Models\City;
 
 class Listing extends Model
 {
+    protected $fillable = ['title', 'slug', 'description', 'properties', 'pictures', 'category_id'];
+    protected $casts = [
+        'properties' => 'array'
+    ];
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
@@ -28,5 +32,18 @@ class Listing extends Model
     public function getPicturesAttribute($pictures)
     {
         return json_decode($pictures, true);
+    }
+
+    public function setPropertiesAttribute($properties)
+    {
+        $values = [];
+
+        foreach ($properties as $array_item) {
+            if (!is_null($array_item['key'])) {
+                $values[] = $array_item;
+            }
+        }
+
+        $this->attributes['properties'] = json_encode($values);
     }
 }

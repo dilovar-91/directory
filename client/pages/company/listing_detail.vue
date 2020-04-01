@@ -1,14 +1,14 @@
 <template>
 <div class="bg-white">  
-<VGallery :images="addUrl(company.pictures)" :index="index" @close="index = null" />
-  <section :style="'background-image: url(/img/companies/'+company.pictures[0]+');'" class="pt-7 pb-5 d-flex align-items-end dark-overlay bg-cover">
+<VGallery :images="addUrl(company.pictures, company.is_company)" :index="index" @close="index = null" />
+  <section :style="'background-image: url('+(company.is_company == 1 ? '/img/companies/' : '/img/products/')+company.pictures[0]+');'" class="pt-7 pb-5 d-flex align-items-end dark-overlay bg-cover">
      <div class="container overlay-content">
         <div class="d-flex justify-content-between align-items-start flex-column flex-lg-row align-items-lg-end">
           <div class="text-white mb-4 mb-lg-0">
             <div class="badge badge-pill badge-transparent px-3 py-2 mb-4"><router-link :to="'/category/'+company.category['slug']" class="text-decoration-none">{{company.category['name'] || ''}}</router-link></div>
             <h1 class="text-shadow verified text-shadow">{{company.title}}</h1>
             <BreadCrumb :title="company.title" parent="Категории" parent_url="categories" :category="company.category['name']" :category_slug="company.category['slug']" />
-            <p v-if="company.properties" class="mt-3"><i class="fa-map-marker-alt fas mr-2"></i> {{company.city['name'] || ''}}, <span v-if="company.metro !== null">{{company.metro['name'] + ',' || '' }}</span>  {{company.properties.adress || '' }}</p>
+            <p v-if="company.is_company == 1" class="mt-3"><i class="fa-map-marker-alt fas mr-2"></i> {{company.city['name'] || ''}}, <span v-if="company.metro !== null">{{company.metro['name'] + ',' || '' }}</span>  {{company.properties.adress || '' }}</p>
             <p class="mb-0 d-flex align-items-center"><star-rating :rating="company.avg_rating" :star-size="17" :read-only="true" :show-rating="false" active-color="yellow" :glow="3"  ></star-rating> <span class="ml-2 mt-1">{{company.review_count || 0}} отзывов</span></p>
           </div>
           <div class="calltoactions"><a href="#addReview" class="btn btn-primary">{{$t('write-review')}}</a></div>
@@ -60,7 +60,7 @@
               <!-- Gallery-->
               <h3 class="mb-4">Галерея</h3>
               <div class="row gallery ml-n1 mr-n1">
-                <div class="col-lg-4 col-6 px-1 mb-2" v-for="(thumb, imageIndex) in company.pictures" :key="imageIndex" @click="index = imageIndex"><img :src="'/img/companies/'+thumb" alt="..." class="img-fluid img-thumbnail" style="height: 150px;"></div>
+                <div class="col-lg-4 col-6 px-1 mb-2" v-for="(thumb, imageIndex) in company.pictures" :key="imageIndex" @click="index = imageIndex"><img :src="(company.is_company == 1 ? '/img/companies/' : '/img/products/')+thumb" alt="..." class="img-fluid img-thumbnail" style="height: 150px;"></div>
               </div>
             </div>          
           <div class="text-block">            
@@ -86,7 +86,7 @@
          
         </div>
         <div class="col-lg-5">
-          <ProductInfo v-if="company.is_company == 1"  :info="company" />
+          <CompanyInfo v-if="company.is_company == 1"  :info="company" />
           <InfoBar v-else :info="company" />
         </div>
       </div>
@@ -102,7 +102,7 @@ import HeartButton from '~/components/HeartButton'
 import Similar from '~/components/Similar'
 import BreadCrumb from '~/components/BreadCrumb'
 import InfoBar from '~/components/InfoBar'
-import ProductInfo from '~/components/ProductInfo'
+import CompanyInfo from '~/components/CompanyInfo'
 export default {
 layout: "main", 
   components: {
@@ -111,7 +111,7 @@ layout: "main",
    Similar,
    BreadCrumb,
    InfoBar,
-   ProductInfo,
+   CompanyInfo,
   }, 
 
   head () {
@@ -169,11 +169,11 @@ layout: "main",
       makeArray(keywords){
             return keywords.split(",");
       },
-      addUrl(pictures){
+      addUrl(pictures, is_company){
         const result = [];
             for (var x in pictures) {
               result.push(
-               '/img/companies/'+pictures[x]
+               (is_company == 1 ? '/img/companies/':'/img/products/')+pictures[x]
               )             
            }
            return result

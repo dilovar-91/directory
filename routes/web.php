@@ -29,6 +29,7 @@ Route::post('/review/like', 'Api\ReviewController@setLike');
 Route::post('/review/setreview', 'Api\ReviewController@setrating');
 Route::get('/latestreviews', 'Api\ReviewController@getLatestReviews');
 Route::get('/listing/{id}', 'Api\ListingController@getCompany');
+Route::get('/listing/{id}', 'Api\ListingController@getCompany');
 
 Route::get('/cities', 'Api\CompanyController@cities')->name('api.cities');
 Route::get('/allcities', 'Api\CompanyController@getCities')->name('allcities');
@@ -38,6 +39,11 @@ Route::get('/city/{slug}', 'Api\CompanyController@getCity')->name('api.city');
 Route::get('/metros', 'Api\CompanyController@metro')->name('api.metro');
 Route::get('/categories', 'Api\CategoryController@getCategories')->name('api.categories');
 Route::get('/category/{slug}', 'Api\CategoryController@getCategoryBySlug')->name('api.categorybyslug');
+
+
+
+//admin
+Route::post('/listing/create', 'Api\ListingController@store');
 
 
 Route::get('{path}', function () {

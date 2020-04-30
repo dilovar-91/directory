@@ -19,7 +19,7 @@
     "bootstrap-select": "^1.13.5",
     "dotenv": "^8.2.0",
     "dropzone": "^5.5.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jquery.cookie": "^1.4.1",
     "js-cookie": "^2.2.1",
     "leaflet": "^1.4.0",
